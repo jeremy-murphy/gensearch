@@ -1,0 +1,18 @@
+#
+Now's the time for all good men to come to the aid of their country.
+time
+#
+Now's the time for all good men to come to the aid of their country.
+timid
+#
+Now's the time for all good men to come to the aid of their country.
+try.
+# The following example is from the KMP paper.
+babcbabcabcaabcabcabcacabc
+abcabcacab
+#
+aaaaaaabcabcadefg
+abcad
+#
+aaaaaaabcabcadefg
+ab
