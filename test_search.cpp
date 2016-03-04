@@ -1,14 +1,11 @@
 
-#line 2677 "gensearch.w"
 
-#line 2661 "gensearch.w"
 #define search stl_search
 #define __search __stl_search
 #include <algo.h>
 #undef search
 #undef __search
 
-#line 2677 "gensearch.w"
 
 #include <iostream.h>
 #include <fstream.h>
@@ -17,7 +14,6 @@
 #include "DNA_search.h"
 int Base_Line;
 
-#line 2783 "gensearch.w"
 template <class Container>
 void get(istream& is, Container& S) {
   S.erase(S.begin(), S.end());
@@ -29,11 +25,9 @@ void get(istream& is, Container& S) {
   }
 }
 
-#line 2684 "gensearch.w"
 
 typedef unsigned char data;
 
-#line 2702 "gensearch.w"
 enum algorithm_enumeration {
      Dummy, SF, L, HAL, ABM, TBM, GBM, HAL2, HAL3, HAL4, HAL5
 };
@@ -88,10 +82,8 @@ inline void
   result = x.begin(); return;
 }
 
-#line 2686 "gensearch.w"
 
 
-#line 2805 "gensearch.w"
 template <class Container>
 void Report(algorithm_enumeration k, const Container& S1, 
             const Container& S2, const char* separator)
@@ -112,7 +104,6 @@ void Report(algorithm_enumeration k, const Container& S1,
       cout << "*****Incorrect result!" << endl;
 }
 
-#line 2687 "gensearch.w"
 
 int main() 
 {  
@@ -122,7 +113,6 @@ int main()
   const char* separator = "";
   for (;;) {
     
-#line 2758 "gensearch.w"
     get(ifs, Comment);
     if (ifs.eof())
       break;
@@ -130,13 +120,11 @@ int main()
     
     get(ifs, S1);
     
-#line 2776 "gensearch.w"
     if (ifs.eof()) {
       cout << "**** Unexpected end of file." << endl;
       exit(1);
     }
     
-#line 2764 "gensearch.w"
     
     cout << "Text string:......";
     copy(S1.begin(), S1.end(), out);
@@ -144,21 +132,17 @@ int main()
     
     get(ifs, S2);
     
-#line 2776 "gensearch.w"
     if (ifs.eof()) {
       cout << "**** Unexpected end of file." << endl;
       exit(1);
     }
     
-#line 2770 "gensearch.w"
     
     cout << "Pattern string:...";
     copy(S2.begin(), S2.end(), out); cout << endl;
     
-#line 2695 "gensearch.w"
 
     
-#line 2796 "gensearch.w"
     Base_Line = 0;
     for (int k = 1; k < number_of_algorithms; ++k) {
       cout << "Using " << algorithm_names[k] << ":" << endl;
@@ -166,7 +150,6 @@ int main()
     }
     cout << endl;
     
-#line 2696 "gensearch.w"
 
   }
 }

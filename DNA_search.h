@@ -1,8 +1,5 @@
-
-#line 2497 "gensearch.w"
 #ifdef __STL_MEMBER_TEMPLATES
   
-#line 2545 "gensearch.w"
   struct search_trait_dna2 {
     enum {hash_range_max = 64};
     enum {suffix_size = 2};
@@ -41,11 +38,9 @@
     }
   };
   
-#line 2498 "gensearch.w"
 
 #else
   
-#line 2589 "gensearch.w"
   typedef unsigned char unsigned_char;
   
   #define search_trait_helper_macro(Iterator)     \
@@ -109,7 +104,6 @@
   # undef search_trait_helper_macro
   };
   
-#line 2500 "gensearch.w"
 
 #endif
 

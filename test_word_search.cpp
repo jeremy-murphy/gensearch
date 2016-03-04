@@ -1,14 +1,11 @@
 
-#line 3383 "gensearch.w"
 
-#line 2661 "gensearch.w"
 #define search stl_search
 #define __search __stl_search
 #include <algo.h>
 #undef search
 #undef __search
 
-#line 3383 "gensearch.w"
 
 #include "new_search.h"
 #include <iterator.h>
@@ -25,7 +22,6 @@ typedef vector<string> sequence;
 sequence S1, S2;
 int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 
-#line 3424 "gensearch.w"
 struct search_word_trait {
   typedef vector<string>::const_iterator RAI;
   enum {hash_range_max = 256};
@@ -35,10 +31,8 @@ struct search_word_trait {
   }
 };
 
-#line 3398 "gensearch.w"
 
 
-#line 3435 "gensearch.w"
 enum algorithm_enumeration {
      Dummy, STL_search, L, HAL
 };
@@ -72,10 +66,8 @@ inline void
   result = x.begin(); return;
 }
 
-#line 3399 "gensearch.w"
 
 
-#line 2805 "gensearch.w"
 template <class Container>
 void Report(algorithm_enumeration k, const Container& S1, 
             const Container& S2, const char* separator)
@@ -96,13 +88,11 @@ void Report(algorithm_enumeration k, const Container& S1,
       cout << "*****Incorrect result!" << endl;
 }
 
-#line 3400 "gensearch.w"
 
 int main() 
 {  
   int F, K, j;
   
-#line 2870 "gensearch.w"
   cout << "Input number of tests (for each pattern size): " << flush;
   cin >> Number_Of_Tests;
   cout << "Input number of pattern sizes: " << flush;
@@ -117,46 +107,37 @@ int main()
     cout << Pattern_Size[j] << " ";
   cout << endl;
   
-#line 3404 "gensearch.w"
 
   typedef map<int, vector<sequence >, less<int> > map_type;
   map_type dictionary;
   
-#line 3470 "gensearch.w"
   ifstream ifs("long.txt");
   typedef istream_iterator<string, ptrdiff_t> string_input;
   copy(string_input(ifs), string_input(), back_inserter(S1));
   
-#line 3407 "gensearch.w"
 
   cout << S1.size() << " words read." << endl;
   const char* separator = " ";
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j) {
     Increment = (S1.size() - Pattern_Size[j]) / Number_Of_Tests;
     
-#line 2922 "gensearch.w"
     cout << "\n\n-----------------------------------------------------------\n"
          << "Searching for patterns of size " << Pattern_Size[j] 
          << "..." << endl;
     cout << "(" << Number_Of_Tests << " patterns from the text, "
          << dictionary[Pattern_Size[j]].size() << "  from the dictionary)" << endl;
     
-#line 3412 "gensearch.w"
 
     
-#line 2930 "gensearch.w"
     F = 0;
     for (K = 1; K <= Number_Of_Tests; ++K) {
       
-#line 2938 "gensearch.w"
       S2.erase(S2.begin(), S2.end());
       copy(S1.begin() + F, S1.begin() + F + Pattern_Size[j], back_inserter(S2));
       F += Increment;
       
-#line 2932 "gensearch.w"
     
       
-#line 2796 "gensearch.w"
       Base_Line = 0;
       for (int k = 1; k < number_of_algorithms; ++k) {
         cout << "Using " << algorithm_names[k] << ":" << endl;
@@ -164,11 +145,9 @@ int main()
       }
       cout << endl;
       
-#line 2933 "gensearch.w"
     
     }
     
-#line 3413 "gensearch.w"
 
   }
 }

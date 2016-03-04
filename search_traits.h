@@ -1,10 +1,8 @@
 
-#line 2106 "gensearch.w"
 #ifndef SEARCH_HASH_TRAITS
 #  define SEARCH_HASH_TRAITS
 #  ifdef __STL_MEMBER_TEMPLATES
      
-#line 2055 "gensearch.w"
      template <class T>
      struct search_trait {
        enum {hash_range_max = 0};
@@ -15,10 +13,8 @@
        }
      };
      
-#line 2109 "gensearch.w"
 
      
-#line 2078 "gensearch.w"
      template <> struct search_trait<signed char> {
        enum {hash_range_max = 256};
        enum {suffix_size = 1};
@@ -38,11 +34,9 @@
        }
      };
      
-#line 2110 "gensearch.w"
 
 #  else
      
-#line 2118 "gensearch.w"
      #include <vector.h>
      #include <deque.h>
      
@@ -90,7 +84,6 @@
      # undef search_trait_helper_macro
      };
      
-#line 2112 "gensearch.w"
 
 #  endif
 #endif

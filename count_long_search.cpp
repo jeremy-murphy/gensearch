@@ -1,14 +1,11 @@
 
-#line 3185 "gensearch.w"
 
-#line 2661 "gensearch.w"
 #define search stl_search
 #define __search __stl_search
 #include <algo.h>
 #undef search
 #undef __search
 
-#line 3185 "gensearch.w"
 
 #include "new_search.h"
 #include "hume.hh"
@@ -20,7 +17,6 @@
 #include <time.h>
 #include <mstring.h>
 
-#line 3221 "gensearch.w"
 #include "counter.h"
 #include "itercount.h"
 #include "distcount.h"
@@ -58,14 +54,12 @@ struct search_trait_for_counting {
 };
 
 
-#line 3195 "gensearch.w"
 
 typedef vector<data> sequence;
 sequence S1;
 int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 double Base_Time = 0.0;
 
-#line 3260 "gensearch.w"
 enum algorithm_enumeration {
      Dummy, STL_search, L, HAL, ABM, TBM
 };
@@ -125,10 +119,8 @@ void Algorithm(int k, const Container& x, const Container& y,
   return;
 }
 
-#line 3200 "gensearch.w"
 
 
-#line 3321 "gensearch.w"
 template <class Container>
 void Run(int k, const Container& S1, 
          const vector<Container>& dictionary, int Pattern_Size)
@@ -150,30 +142,25 @@ void Run(int k, const Container& S1,
       S2.push_back(*u++);
     F += Increment;
     
-#line 3034 "gensearch.w"
     Algorithm(k, S1, S2, P);
     d = 0;
     distance(S1.begin(), P, d);
     Total_Search += d + Pattern_Size;
     
-#line 3341 "gensearch.w"
 
   }
   for (K = 0; K < dictionary.size(); ++K) {
     S2 = dictionary[K];
     
-#line 3034 "gensearch.w"
     Algorithm(k, S1, S2, P);
     d = 0;
     distance(S1.begin(), P, d);
     Total_Search += d + Pattern_Size;
     
-#line 3345 "gensearch.w"
 
   }
   Finish_Time = clock();
   
-#line 3353 "gensearch.w"
   Time_Taken = (Finish_Time - Start_Time)/CLOCKS_PER_SEC - Base_Time;
   if (k == 0) 
     Base_Time = Time_Taken;  
@@ -188,18 +175,15 @@ void Run(int k, const Container& S1,
     cout << "Speed: " << Speed << " elements/microsecond." << endl << endl;
   }
   
-#line 3348 "gensearch.w"
 
 }
 
-#line 3201 "gensearch.w"
 
 
 int main()
 { 
   int j;
   
-#line 2870 "gensearch.w"
   cout << "Input number of tests (for each pattern size): " << flush;
   cin >> Number_Of_Tests;
   cout << "Input number of pattern sizes: " << flush;
@@ -214,20 +198,16 @@ int main()
     cout << Pattern_Size[j] << " ";
   cout << endl;
   
-#line 3206 "gensearch.w"
 
   
-#line 2914 "gensearch.w"
   ifstream ifs(textFileName);
   char C;
   while (ifs.get(C))
     S1.push_back(C);
   cout << S1.size() << " characters read." << endl;
   
-#line 3207 "gensearch.w"
 
   
-#line 2886 "gensearch.w"
   ifstream dictfile(wordFileName);
   typedef istream_iterator<string, ptrdiff_t> string_input;
   typedef map<int, vector<sequence>, less<int> > map_type;
@@ -242,11 +222,9 @@ int main()
     dictionary[S.size()].push_back(S);
   }
   
-#line 3208 "gensearch.w"
 
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j) {
     
-#line 2902 "gensearch.w"
     vector<sequence>& diction = dictionary[Pattern_Size[j]];
     if (diction.size() > Number_Of_Tests) {
       vector<sequence> temp;
@@ -257,22 +235,18 @@ int main()
       diction = temp;
     }
     
-#line 3210 "gensearch.w"
 
     Increment = (S1.size() - Pattern_Size[j]) / Number_Of_Tests;
     
-#line 2922 "gensearch.w"
     cout << "\n\n-----------------------------------------------------------\n"
          << "Searching for patterns of size " << Pattern_Size[j] 
          << "..." << endl;
     cout << "(" << Number_Of_Tests << " patterns from the text, "
          << dictionary[Pattern_Size[j]].size() << "  from the dictionary)" << endl;
     
-#line 3212 "gensearch.w"
 
     cerr << Pattern_Size[j] << " " << flush;
     
-#line 3041 "gensearch.w"
     Base_Time = 0.0;
     for (int k = 0; k < number_of_algorithms; ++k) {
       if (k != 0) 
@@ -281,7 +255,6 @@ int main()
     }
     cout << endl;
     
-#line 3214 "gensearch.w"
 
   }
   cerr << endl;

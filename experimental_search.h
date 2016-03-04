@@ -1,7 +1,5 @@
 
-#line 2364 "gensearch.w"
 
-#line 2371 "gensearch.w"
 struct large_alphabet_trait {
   typedef unsigned short T;
   enum {suffix_size = 1};
@@ -80,31 +78,24 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
   skewed_array<Distance1, RandomAccessIterator2, Trait::hash_range_max+1>
     skip(pattern_size - Trait::suffix_size + 1, pattern, patternEnd);
   
-#line 2453 "gensearch.w"
   k = 0; 
   text_size = textEnd - text;
   
-#line 2353 "gensearch.w"
   compute_next(pattern, patternEnd, next);
   
-#line 2455 "gensearch.w"
   
   
-#line 1149 "gensearch.w"
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   
-#line 2456 "gensearch.w"
   
   
-#line 2473 "gensearch.w"
   m = next.size();
   for (j = Trait::suffix_size - 1; j < m - 1; ++j)
     skip[*(pattern + j)] = m - 1 - j;
   mismatch_shift = skip[*(pattern + m - 1)];
   skip[*(pattern + m - 1)] = 0;
   
-#line 2457 "gensearch.w"
   
   large = text_size + 1;
   adjustment = large + pattern_size - 1;
@@ -115,7 +106,6 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
     k += pattern_size - 1;
     if (k >= 0) break;
     
-#line 2481 "gensearch.w"
     do {
       k += skip[*(textEnd + k)]; 
     } while (k < 0);
@@ -123,15 +113,12 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
       return textEnd;
     k -= adjustment;
     
-#line 2466 "gensearch.w"
   
     
-#line 2268 "gensearch.w"
     if (textEnd[k] != pattern[0])
       k += mismatch_shift;
     else {
       
-#line 2280 "gensearch.w"
       j = 1; 
       for (;;) {
         ++k;
@@ -142,13 +129,11 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
           return textEnd + k - pattern_size + 1;
       }
       
-#line 2271 "gensearch.w"
     
       if (mismatch_shift > j)
         k += mismatch_shift - j;
       else
         
-#line 2292 "gensearch.w"
         for (;;) {
           j = next[j];
           if (j < 0) {
@@ -167,18 +152,14 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
           }
         }
         
-#line 2275 "gensearch.w"
     
     }
     
-#line 2467 "gensearch.w"
   
   }
   return textEnd;
   
-#line 2448 "gensearch.w"
 
 }
 
-#line 2364 "gensearch.w"
 

@@ -1,5 +1,4 @@
 
-#line 2027 "gensearch.w"
 #ifndef NEW_SEARCH
 #  define NEW_SEARCH
 #  include <vector.h>
@@ -7,7 +6,6 @@
 #  include <iterator.h>
 #  ifdef __STL_ITERATOR_TRAITS_NEEDED
      
-#line 3532 "gensearch.w"
      template <class Iterator>
      struct iterator_traits {
        typedef Iterator::iterator_category iterator_category;
@@ -41,12 +39,10 @@
      ptr_iterator_traits(short);
      ptr_iterator_traits(unsigned short);
      
-#line 2033 "gensearch.w"
 
 #  endif
 
 
-#line 2332 "gensearch.w"
 template <class RandomAccessIterator, class Distance>
 void compute_next(RandomAccessIterator pattern, 
                   RandomAccessIterator patternEnd,
@@ -66,10 +62,8 @@ void compute_next(RandomAccessIterator pattern,
   }
 }
 
-#line 2036 "gensearch.w"
 
 
-#line 1104 "gensearch.w"
 template <class ForwardIterator, class Distance>
 void compute_next(ForwardIterator pattern, 
                   ForwardIterator patternEnd,
@@ -97,10 +91,6 @@ void compute_next(ForwardIterator pattern,
   }
 }
 
-#line 2037 "gensearch.w"
-
-
-#line 1052 "gensearch.w"
 template <class ForwardIterator1, class ForwardIterator2>
 inline ForwardIterator1 search(ForwardIterator1 text,
                                ForwardIterator1 textEnd,
@@ -111,10 +101,8 @@ inline ForwardIterator1 search(ForwardIterator1 text,
   return __search(text, textEnd, pattern, patternEnd, T::iterator_category());
 }
 
-#line 2038 "gensearch.w"
 
 
-#line 1066 "gensearch.w"
 template <class ForwardIterator1, class ForwardIterator2>
 inline ForwardIterator1 __search(ForwardIterator1 text,
                                  ForwardIterator1 textEnd,
@@ -138,33 +126,25 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
   vector<Distance2> next;
   vector<ForwardIterator2> pattern_iterator;
   
-#line 1100 "gensearch.w"
   compute_next(pattern, patternEnd, next, pattern_iterator);
   
-#line 1088 "gensearch.w"
 
   m = next.size();
   
-#line 1135 "gensearch.w"
   
-#line 1149 "gensearch.w"
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   
-#line 1135 "gensearch.w"
   
   p1 = pattern; ++p1;
   while (text != textEnd) {
     
-#line 1158 "gensearch.w"
     while (*text != *pattern) 
       if (++text == textEnd)
         return textEnd;
     
-#line 1138 "gensearch.w"
   
     
-#line 1164 "gensearch.w"
     p = p1; j = 1;
     hold = text;
     if (++text == textEnd)
@@ -177,10 +157,8 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
       ++j;
     }
     
-#line 1139 "gensearch.w"
   
     
-#line 1178 "gensearch.w"
     for (;;) {
       j = next[j];
       if (j < 0) {
@@ -194,7 +172,6 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
         ++text; ++p; ++j;
         if (p == patternEnd) {
           
-#line 1202 "gensearch.w"
           advance = hold;
           for (int i = m; --i >= 0;) 
             ++advance;
@@ -202,7 +179,6 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
             ++advance, ++hold;
           return hold;
           
-#line 1190 "gensearch.w"
     
         }
         if (text == textEnd)
@@ -210,19 +186,15 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
       }
     }
     
-#line 1140 "gensearch.w"
   
   }
   return textEnd;
   
-#line 1090 "gensearch.w"
 
 }
 
-#line 2039 "gensearch.w"
 
 
-#line 2175 "gensearch.w"
 template <class BidirectionalIterator1, class BidirectionalIterator2>
 inline BidirectionalIterator1 __search(BidirectionalIterator1 text,
                                        BidirectionalIterator1 textEnd,
@@ -233,10 +205,8 @@ inline BidirectionalIterator1 __search(BidirectionalIterator1 text,
   return __search_L(text, textEnd, pattern, patternEnd);
 }
 
-#line 2040 "gensearch.w"
 
 
-#line 2196 "gensearch.w"
 template <class RandomAccessIterator1, class RandomAccessIterator2>
 inline RandomAccessIterator1 __search(RandomAccessIterator1 text,
                                       RandomAccessIterator1 textEnd,
@@ -249,10 +219,8 @@ inline RandomAccessIterator1 __search(RandomAccessIterator1 text,
   return search_hashed(text, textEnd, pattern, patternEnd, (Trait*)0 ); 
 }
 
-#line 2041 "gensearch.w"
 
 
-#line 2213 "gensearch.w"
 
 template <class RandomAccessIterator1, class RandomAccessIterator2, class Trait>
 RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
@@ -271,24 +239,13 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   Distance1 i, k, large, adjustment, mismatch_shift, text_size;
   vector<Distance1> next, skip;
   
-#line 2240 "gensearch.w"
   k = 0; 
   text_size = textEnd - text;
   
-#line 2353 "gensearch.w"
   compute_next(pattern, patternEnd, next);
   
-#line 2242 "gensearch.w"
-  
-  
-#line 1149 "gensearch.w"
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
-  
-#line 2243 "gensearch.w"
-  
-  
-#line 2315 "gensearch.w"
   m = next.size();
   for (i = 0; i < Trait::hash_range_max; ++i)
     skip.push_back(m - Trait::suffix_size + 1);
@@ -296,8 +253,6 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
     skip[Trait::hash(pattern + j)] = m - 1 - j;
   mismatch_shift = skip[Trait::hash(pattern + m - 1)];
   skip[Trait::hash(pattern + m - 1)] = 0;
-  
-#line 2244 "gensearch.w"
   
   large = text_size + 1;
   adjustment = large + pattern_size - 1;
@@ -307,7 +262,6 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
     k += pattern_size - 1;
     if (k >= 0) break;
     
-#line 2259 "gensearch.w"
     do {
       k += skip[Trait::hash(textEnd + k)]; 
     } while (k < 0);
@@ -315,15 +269,12 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
       return textEnd;
     k -= adjustment;
     
-#line 2252 "gensearch.w"
   
     
-#line 2268 "gensearch.w"
     if (textEnd[k] != pattern[0])
       k += mismatch_shift;
     else {
       
-#line 2280 "gensearch.w"
       j = 1; 
       for (;;) {
         ++k;
@@ -334,13 +285,11 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
           return textEnd + k - pattern_size + 1;
       }
       
-#line 2271 "gensearch.w"
     
       if (mismatch_shift > j)
         k += mismatch_shift - j;
       else
         
-#line 2292 "gensearch.w"
         for (;;) {
           j = next[j];
           if (j < 0) {
@@ -359,19 +308,14 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
           }
         }
         
-#line 2275 "gensearch.w"
     
     }
     
-#line 2253 "gensearch.w"
   
   }
   return textEnd;
-  
-#line 2230 "gensearch.w"
 
 }
 
-#line 2042 "gensearch.w"
 
 #endif
