@@ -19,6 +19,8 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
+#include <cstring>
+
 #ifndef	CHARTYPE
 #define	CHARTYPE	unsigned char
 #endif

@@ -2,18 +2,18 @@
 
 #define search stl_search
 #define __search __stl_search
-#include <algo.h>
+#include <algorithm>
 #undef search
 #undef __search
 
 
 #include "new_search.h"
-#include <iterator.h>
-#include <vector.h>
-#include <map.h>
-#include <iostream.h>
-#include <fstream.h>
-#include <mstring.h>
+#include <iterator>
+#include <vector>
+#include <map>
+#include <iostream>
+#include <fstream>
+#include <string>
 typedef string data;
 typedef vector<string> sequence;
 #if __STL_ITERATOR_TRAITS_NEEDED 

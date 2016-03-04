@@ -2,20 +2,20 @@
 
 #define search stl_search
 #define __search __stl_search
-#include <algo.h>
+#include <algorithm>
 #undef search
 #undef __search
 
 
 #include "new_search.h"
 #include "experimental_search.h"
-#include <iterator.h>
-#include <deque.h>
-#include <vector.h>
-#include <map.h>
-#include <iostream.h>
-#include <fstream.h>
-#include <time.h>
+#include <iterator>
+#include <deque>
+#include <vector>
+#include <map>
+#include <iostream>
+#include <fstream>
+#include <ctime>
 
 typedef unsigned short data;
 #ifndef APCC_BUG

@@ -2,7 +2,7 @@
 
 #define search stl_search
 #define __search __stl_search
-#include <algo.h>
+#include <algorithm>
 #undef search
 #undef __search
 
@@ -10,12 +10,12 @@
 #include "new_search.h"
 #include "hume.hh"
 #include "DNA_search.h"
-#include <iterator.h>
-#include <vector.h>
-#include <map.h>
-#include <iostream.h>
-#include <fstream.h>
-#include <mstring.h>
+#include <iterator>
+#include <vector>
+#include <map>
+#include <iostream>
+#include <fstream>
+#include <string>
 typedef unsigned char data;
 typedef vector<data> sequence;
 sequence S1, S2;

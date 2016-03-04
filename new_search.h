@@ -1,9 +1,9 @@
 
 #ifndef NEW_SEARCH
 #  define NEW_SEARCH
-#  include <vector.h>
+#  include <vector>
 #  include "search_traits.h"
-#  include <iterator.h>
+#  include <iterator>
 #  ifdef __STL_ITERATOR_TRAITS_NEEDED
      
      template <class Iterator>

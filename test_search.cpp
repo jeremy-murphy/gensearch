@@ -2,13 +2,13 @@
 
 #define search stl_search
 #define __search __stl_search
-#include <algo.h>
+#include <algorithm>
 #undef search
 #undef __search
 
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include "new_search.h"
 #include "hume.hh"
 #include "DNA_search.h"

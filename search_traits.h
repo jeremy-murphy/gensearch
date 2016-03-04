@@ -37,8 +37,8 @@
 
 #  else
      
-     #include <vector.h>
-     #include <deque.h>
+     #include <vector>
+     #include <deque>
      
      template <class T>
      struct search_trait {
