@@ -50,8 +50,8 @@
        }
        search_trait_helper_macro(T*)
        search_trait_helper_macro(const T*)
-       search_trait_helper_macro(deque<T>::iterator)
-       search_trait_helper_macro(deque<T>::const_iterator)
+       search_trait_helper_macro(typename std::deque<T>::iterator)
+       search_trait_helper_macro(typename std::deque<T>::const_iterator)
      # undef search_trait_helper_macro
      };
      
@@ -65,8 +65,8 @@
        }
        search_trait_helper_macro(char*)
        search_trait_helper_macro(const char*)
-       search_trait_helper_macro(deque<char>::iterator)
-       search_trait_helper_macro(deque<char>::const_iterator)
+       search_trait_helper_macro(typename std::deque<char>::iterator)
+       search_trait_helper_macro(typename std::deque<char>::const_iterator)
      # undef search_trait_helper_macro
      };
      
@@ -81,8 +81,8 @@
        }
        search_trait_helper_macro(unsigned_char*)
        search_trait_helper_macro(const unsigned_char*)
-       search_trait_helper_macro(deque<unsigned_char>::iterator)
-       search_trait_helper_macro(deque<unsigned_char>::const_iterator)
+       search_trait_helper_macro(typename std::deque<unsigned_char>::iterator)
+       search_trait_helper_macro(typename std::deque<unsigned_char>::const_iterator)
      # undef search_trait_helper_macro
      };
      

@@ -52,8 +52,8 @@
     enum {suffix_size = 2};
     search_trait_helper_macro(unsigned_char*)
     search_trait_helper_macro(const unsigned_char*)
-    search_trait_helper_macro(deque<unsigned_char>::iterator)
-    search_trait_helper_macro(deque<unsigned_char>::const_iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::const_iterator)
   };
   #undef search_trait_helper_macro
   
@@ -67,8 +67,8 @@
     typedef unsigned char unsigned_char;
     search_trait_helper_macro(unsigned_char*)
     search_trait_helper_macro(const unsigned_char*)
-    search_trait_helper_macro(deque<unsigned_char>::iterator)
-    search_trait_helper_macro(deque<unsigned_char>::const_iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::const_iterator)
   # undef search_trait_helper_macro
   };
   
@@ -83,8 +83,8 @@
     typedef unsigned char unsigned_char;
     search_trait_helper_macro(unsigned_char*)
     search_trait_helper_macro(const unsigned_char*)
-    search_trait_helper_macro(deque<unsigned_char>::iterator)
-    search_trait_helper_macro(deque<unsigned_char>::const_iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::const_iterator)
   # undef search_trait_helper_macro
   };
   
@@ -99,8 +99,8 @@
     typedef unsigned char unsigned_char;
     search_trait_helper_macro(unsigned_char*)
     search_trait_helper_macro(const unsigned_char*)
-    search_trait_helper_macro(deque<unsigned_char>::iterator)
-    search_trait_helper_macro(deque<unsigned_char>::const_iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::iterator)
+    search_trait_helper_macro(typename std::deque<unsigned_char>::const_iterator)
   # undef search_trait_helper_macro
   };
   

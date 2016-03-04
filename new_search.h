@@ -46,7 +46,7 @@
 template <class RandomAccessIterator, class Distance>
 void compute_next(RandomAccessIterator pattern, 
                   RandomAccessIterator patternEnd,
-                  vector<Distance>& next)
+                  std::vector<Distance>& next)
 {
   Distance pattern_size = patternEnd - pattern, j = 0, t = -1;
   next.reserve(32);
@@ -67,8 +67,8 @@ void compute_next(RandomAccessIterator pattern,
 template <class ForwardIterator, class Distance>
 void compute_next(ForwardIterator pattern, 
                   ForwardIterator patternEnd,
-                  vector<Distance>& next, 
-                  vector<ForwardIterator>& pattern_iterator)
+                  std::vector<Distance>& next, 
+                  std::vector<ForwardIterator>& pattern_iterator)
 {
   Distance t = -1;
   next.reserve(32);
@@ -200,7 +200,7 @@ inline BidirectionalIterator1 __search(BidirectionalIterator1 text,
                                        BidirectionalIterator1 textEnd,
                                        BidirectionalIterator2 pattern,
                                        BidirectionalIterator2 patternEnd,
-                                       bidirectional_iterator_tag)
+                                       std::bidirectional_iterator_tag)
 {
   return __search_L(text, textEnd, pattern, patternEnd);
 }
@@ -212,9 +212,9 @@ inline RandomAccessIterator1 __search(RandomAccessIterator1 text,
                                       RandomAccessIterator1 textEnd,
                                       RandomAccessIterator2 pattern,
                                       RandomAccessIterator2 patternEnd,
-                                      random_access_iterator_tag)
+                                      std::random_access_iterator_tag)
 {
-  typedef iterator_traits<RandomAccessIterator1>::value_type V;
+  typedef typename std::iterator_traits<RandomAccessIterator1>::value_type V;
   typedef search_trait<V> Trait;
   return search_hashed(text, textEnd, pattern, patternEnd, (Trait*)0 ); 
 }
@@ -229,21 +229,20 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
                                     RandomAccessIterator2 patternEnd,
                                     Trait*)
 {
-  typedef typename iterator_traits<RandomAccessIterator1>::difference_type Distance1;
-  typedef typename iterator_traits<RandomAccessIterator2>::difference_type Distance2;
+  typedef typename std::iterator_traits<RandomAccessIterator1>::difference_type Distance1;
+  typedef typename std::iterator_traits<RandomAccessIterator2>::difference_type Distance2;
   if (pattern == patternEnd) return text;
   Distance2 pattern_size, j, m;
   pattern_size = patternEnd - pattern; 
   if (Trait::suffix_size == 0 || pattern_size < Trait::suffix_size)
     return __search_L(text, textEnd, pattern, patternEnd);
   Distance1 i, k, large, adjustment, mismatch_shift, text_size;
-  vector<Distance1> next, skip;
+  std::vector<Distance1> next, skip;
   
   k = 0; 
   text_size = textEnd - text;
   
   compute_next(pattern, patternEnd, next);
-  
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   m = next.size();

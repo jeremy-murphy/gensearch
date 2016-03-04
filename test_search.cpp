@@ -15,7 +15,7 @@
 int Base_Line;
 
 template <class Container>
-void get(istream& is, Container& S) {
+void get(std::istream& is, Container& S) {
   S.erase(S.begin(), S.end());
   char ch;
   while (is.get(ch)) {
