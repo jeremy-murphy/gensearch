@@ -55,6 +55,7 @@
      # undef search_trait_helper_macro
      };
      
+     template <>
      struct search_trait<char> {
        enum {hash_range_max = 256};
        enum {suffix_size = 1};
@@ -70,6 +71,7 @@
      };
      
      typedef unsigned char unsigned_char;
+     template <>
      struct search_trait<unsigned_char> {
        enum {hash_range_max = 256};
        enum {suffix_size = 1};
