@@ -165,6 +165,7 @@ CHARTYPE* slowbm(CHARTYPE* text, CHARTYPE* textEnd, CHARTYPE* pat, CHARTYPE* pat
   return bmexec(text, textEnd - text);
 }
 
+/*
 template <class RandomAccessIterator1, class RandomAccessIterator2>
 RandomAccessIterator1 slowbm(
                     RandomAccessIterator1 txt, RandomAccessIterator1 txtEnd,
@@ -187,6 +188,7 @@ RandomAccessIterator1 slowbm(
   return (RandomAccessIterator1)(data*)result;
 #endif
 }
+*/
 
 #include "freq.h"
 
