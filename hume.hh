@@ -47,8 +47,8 @@ static struct
 
 void bmprep(CHARTYPE* base, int m)
 {
-	register Tab *d2;
-	register int q1, t, qp, jp, kp, j;
+	Tab *d2;
+	int q1, t, qp, jp, kp, j;
 	Tab f[256], f1[256];
 
 	pat.patlen = m;
@@ -93,14 +93,14 @@ void bmprep(CHARTYPE* base, int m)
 
 CHARTYPE* bmexec_cnt(CHARTYPE* base, int n)
 {
-	register CHARTYPE *e, *s;
-	register int s_offset;
-	register CHARTYPE *p, *q;
-	register int n1 = pat.patlen-1;
-	register CHARTYPE *ep;
-	register Tab *d1 = pat.delta1;
-	register Tab *d2 = pat.delta2+1;
-	register int k1, k2;
+	CHARTYPE *e, *s;
+	int s_offset;
+	CHARTYPE *p, *q;
+	int n1 = pat.patlen-1;
+	CHARTYPE *ep;
+	Tab *d1 = pat.delta1;
+	Tab *d2 = pat.delta2+1;
+	int k1, k2;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -127,14 +127,14 @@ CHARTYPE* bmexec_cnt(CHARTYPE* base, int n)
 
 CHARTYPE* bmexec(CHARTYPE* base, int n)
 {
-	register CHARTYPE *e, *s;
-	register int s_offset;
-	register CHARTYPE *p, *q;
-	register int n1 = pat.patlen-1;
-	register CHARTYPE *ep;
-	register Tab *d1 = pat.delta1;
-	register Tab *d2 = pat.delta2+1;
-	register int k1, k2;
+	CHARTYPE *e, *s;
+	int s_offset;
+	CHARTYPE *p, *q;
+	int n1 = pat.patlen-1;
+	CHARTYPE *ep;
+	Tab *d1 = pat.delta1;
+	Tab *d2 = pat.delta2+1;
+	int k1, k2;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -195,11 +195,11 @@ RandomAccessIterator1 slowbm(
 void humprep(const CHARTYPE* base, int m)
 {
   	CHARTYPE *skipc;
-	register CHARTYPE *pe, *p;
-	register int j;
-	register Tab *d;
+	CHARTYPE *pe, *p;
+	int j;
+	Tab *d;
 	int rrr, rr;
-	register CHARTYPE *pmd2;
+	CHARTYPE *pmd2;
 
 	pat.patlen = m;
 	if(m > MAXPAT)
@@ -227,13 +227,13 @@ void humprep(const CHARTYPE* base, int m)
 
 const CHARTYPE* humexec(const CHARTYPE* base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *ep;
-	register int ro, rc;
-	register int n1 = pat.patlen-1;
-	register int md2 = pat.md2;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *ep;
+	int ro, rc;
+	int n1 = pat.patlen-1;
+	int md2 = pat.md2;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -261,14 +261,14 @@ const CHARTYPE* humexec(const CHARTYPE* base, int n)
 }
 const CHARTYPE* humexec_cnt(const CHARTYPE* base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
-	register int ro, rc;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
+	int ro, rc;
 
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *ep;
-	register int n1 = pat.patlen-1;
-	register int md2 = pat.md2;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *ep;
+	int n1 = pat.patlen-1;
+	int md2 = pat.md2;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -330,11 +330,11 @@ RandomAccessIterator1 hume(
 
 void fbmprep(const CHARTYPE *base, int m)
 {
-	register const CHARTYPE *pe, *p;
-	register int j;
-	register Tab *d;
-	register Tab *d2;
-	register int q1, t, qp, jp, kp;
+	const CHARTYPE *pe, *p;
+	int j;
+	Tab *d;
+	Tab *d2;
+	int q1, t, qp, jp, kp;
 	Tab f[256], f1[256];
 
 	pat.patlen = m;
@@ -386,13 +386,13 @@ void fbmprep(const CHARTYPE *base, int m)
 
 const CHARTYPE* fbmexec(const CHARTYPE *base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
 
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *prev = pat.pat+pat.patlen-1;
-	register Tab *d2 = pat.delta2+1;
-	register int k1;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+	Tab *d2 = pat.delta2+1;
+	int k1;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -419,13 +419,13 @@ const CHARTYPE* fbmexec(const CHARTYPE *base, int n)
 
 const CHARTYPE* fbmexec_cnt(const CHARTYPE *base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
 
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *prev = pat.pat+pat.patlen-1;
-	register Tab *d2 = pat.delta2+1;
-	register int k1;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+	Tab *d2 = pat.delta2+1;
+	int k1;
 
 	s = base+pat.patlen-1;
 	e = base+n; pat.cmps = pat.accs = 0;
@@ -482,10 +482,10 @@ RandomAccessIterator1 fbm(
 
 void gdprep(const CHARTYPE *base, int m)
 {
-	register const CHARTYPE *pe, *p;
-	register int j;
-	register Tab *d;
-	register int j0, k, q, i, jj;
+	const CHARTYPE *pe, *p;
+	int j;
+	Tab *d;
+	int j0, k, q, i, jj;
 	int endof[MAXPAT], rmin[MAXPAT];
 
 	pat.patlen = m;
@@ -540,12 +540,12 @@ void gdprep(const CHARTYPE *base, int m)
 
 const CHARTYPE* gdexec(const CHARTYPE *base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
 
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *prev = pat.pat+pat.patlen-1;
-	register int kg;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+	int kg;
 
 	s = base+pat.patlen-1;
 	e = base+n;
@@ -571,12 +571,12 @@ const CHARTYPE* gdexec(const CHARTYPE *base, int n)
 
 const CHARTYPE* gdexec_cnt(const CHARTYPE *base, int n)
 {
-	register const CHARTYPE *e, *s;
-	register Tab *d0 = pat.delta;
+	const CHARTYPE *e, *s;
+	Tab *d0 = pat.delta;
 
-	register const CHARTYPE *p, *q;
-	register const CHARTYPE *prev = pat.pat+pat.patlen-1;
-	register int kg;
+	const CHARTYPE *p, *q;
+	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+	int kg;
 
 	s = base+pat.patlen-1;
 	e = base+n; pat.accs = pat.cmps = 0;
