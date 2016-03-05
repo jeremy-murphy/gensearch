@@ -49,39 +49,36 @@ const char* algorithm_names[] = {
 
 const int number_of_algorithms = sizeof(alg)/sizeof(alg[0]); 
 
-template <class Container, class Container__const_iterator>
-inline void
-   Algorithm(int k, const Container& x, const Container& y, 
-             Container__const_iterator& result)
+template <typename ForwardIterator>
+ForwardIterator Algorithm(int k, ForwardIterator first_x, ForwardIterator last_x, ForwardIterator first_y, ForwardIterator last_y)
 {
   switch (alg[k]) {
   case Dummy: 
      // does nothing, used for timing overhead of test loop
-     result = x.begin(); return;  
+     return first_x;
   case SF: 
-     result = stl_search(x.begin(), x.end(), y.begin(), y.end()); return;
+     return stl_search(first_x, last_x, first_y, last_y);
   case L: 
-     result =  __search_L(x.begin(), x.end(), y.begin(), y.end()); return;
+     return  __search_L(first_x, last_x, first_y, last_y);
   case HAL: 
-     result = search(x.begin(), x.end(), y.begin(), y.end()); return;
+     return search(first_x, last_x, first_y, last_y);
   case ABM: 
-     result = fbm(x.begin(), x.end(), y.begin(), y.end()); return;
+     return fbm(first_x, last_x, first_y, last_y);
   case TBM: 
-     result = hume(x.begin(), x.end(), y.begin(), y.end()); return;
+     return hume(first_x, last_x, first_y, last_y);
   case GBM: 
-     result = gdbm(x.begin(), x.end(), y.begin(), y.end()); return;
+     return gdbm(first_x, last_x, first_y, last_y);
   case HAL2: 
-     result = hal2(x.begin(), x.end(), y.begin(), y.end()); return;
+     return hal2(first_x, last_x, first_y, last_y);
   case HAL3: 
-     result = hal3(x.begin(), x.end(), y.begin(), y.end()); return;
+     return hal3(first_x, last_x, first_y, last_y);
   case HAL4: 
-     result = hal4(x.begin(), x.end(), y.begin(), y.end()); return;
+     return hal4(first_x, last_x, first_y, last_y);
   case HAL5: 
-     result = hal5(x.begin(), x.end(), y.begin(), y.end()); return;
+     return hal5(first_x, last_x, first_y, last_y);
   }
-  result = x.begin(); return;
+  return first_x;
 }
-
 
 
 template <class Container>
@@ -90,7 +87,7 @@ void Report(algorithm_enumeration k, const Container& S1,
 {
     using namespace std;
   typename Container::const_iterator P;
-  Algorithm(k, S1, S2, P);
+  P = Algorithm(k, S1.begin(), S1.end(), S2.begin(), S2.end());
   cout << "  String " << '"';
   copy(S2.begin(), S2.end(), 
        ostream_iterator<typename Container::value_type>(cout, separator));
