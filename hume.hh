@@ -20,10 +20,9 @@
  */
 
 #include <cstring>
+#include <cstdlib>
+#include <vector>
 
-#ifndef	CHARTYPE
-#define	CHARTYPE	unsigned char
-#endif
 #define	MAXPAT	256
 
 #ifndef	TABTYPE
@@ -31,10 +30,10 @@
 #endif
 typedef TABTYPE Tab;
 
-static struct
+struct pattern
 {
 	int patlen;
-	CHARTYPE pat[MAXPAT];
+        std::vector<char> pat;
 	Tab delta1[256];
 	Tab delta2[257];
         Tab delta[256];
@@ -43,9 +42,14 @@ static struct
         int md2;
 
         long cmps, accs;
-} pat;
+};
 
-void bmprep(CHARTYPE* base, int m)
+static pattern pat = {0, std::vector<char>(MAXPAT)};
+
+typedef std::vector<char>::const_iterator pat_iterator;
+
+template <typename RandomAccessIterator>
+void bmprep(RandomAccessIterator base, int m)
 {
 	Tab *d2;
 	int q1, t, qp, jp, kp, j;
@@ -54,7 +58,7 @@ void bmprep(CHARTYPE* base, int m)
 	pat.patlen = m;
 	if(m > MAXPAT)
 		abort();
-	memcpy(pat.pat, base, m);
+        std::copy(base, base + m, pat.pat.begin());
 	d2 = pat.delta1;
 	for(j = 0; j < 256; j++)
 		d2[j] = m;
@@ -91,13 +95,14 @@ void bmprep(CHARTYPE* base, int m)
 	d2[0] = m+1;		/* the case where the match succeeded */
 }
 
-CHARTYPE* bmexec_cnt(CHARTYPE* base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator bmexec_cnt(RandomAccessIterator base, int n)
 {
-	CHARTYPE *e, *s;
+        RandomAccessIterator e, s;
 	int s_offset;
-	CHARTYPE *p, *q;
+        RandomAccessIterator p, q;
 	int n1 = pat.patlen-1;
-	CHARTYPE *ep;
+        RandomAccessIterator ep;
 	Tab *d1 = pat.delta1;
 	Tab *d2 = pat.delta2+1;
 	int k1, k2;
@@ -107,7 +112,7 @@ CHARTYPE* bmexec_cnt(CHARTYPE* base, int n)
 	s_offset = 1-pat.patlen;
 	ep = pat.pat; pat.cmps = pat.accs = 0;
 	while(s < e){
-		for(p = pat.pat+n1, q = s+n1+s_offset; p >= ep; ){
+		for(p = pat.pat.begin()+n1, q = s+n1+s_offset; p >= ep; ){
 			if(++pat.cmps,(*q-- != *p--)){
 				q++, p++;
 				goto mismatch;
@@ -125,13 +130,14 @@ CHARTYPE* bmexec_cnt(CHARTYPE* base, int n)
 	return e;
 }
 
-CHARTYPE* bmexec(CHARTYPE* base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator bmexec(RandomAccessIterator base, int n)
 {
-	CHARTYPE *e, *s;
+        RandomAccessIterator e, s;
 	int s_offset;
-	CHARTYPE *p, *q;
+        RandomAccessIterator p, q;
 	int n1 = pat.patlen-1;
-	CHARTYPE *ep;
+        RandomAccessIterator ep;
 	Tab *d1 = pat.delta1;
 	Tab *d2 = pat.delta2+1;
 	int k1, k2;
@@ -141,7 +147,7 @@ CHARTYPE* bmexec(CHARTYPE* base, int n)
 	s_offset = 1-pat.patlen;
 	ep = pat.pat;
 	while(s < e){
-		for(p = pat.pat+n1, q = s+n1+s_offset; p >= ep; ){
+		for(p = pat.pat.begin()+n1, q = s+n1+s_offset; p >= ep; ){
 			if(*q-- != *p--){
 				q++, p++;
 				goto mismatch;
@@ -159,7 +165,8 @@ CHARTYPE* bmexec(CHARTYPE* base, int n)
 	return(e);
 }
 
-CHARTYPE* slowbm(CHARTYPE* text, CHARTYPE* textEnd, CHARTYPE* pat, CHARTYPE* patEnd) 
+template <typename RandomAccessIterator1, typename RandomAccessIterator2>
+RandomAccessIterator1 slowbm(RandomAccessIterator1 text, RandomAccessIterator1 textEnd, RandomAccessIterator2 pat, RandomAccessIterator2 patEnd) 
 {
   bmprep(pat, patEnd - pat);  
   return bmexec(text, textEnd - text);
@@ -191,28 +198,29 @@ RandomAccessIterator1 slowbm(
 */
 
 #include "freq.h"
+#include <algorithm>
 
-void humprep(const CHARTYPE* base, int m)
+template <typename RandomAccessIterator>
+void humprep(RandomAccessIterator base, int m)
 {
-  	CHARTYPE *skipc;
-	CHARTYPE *pe, *p;
+        pat_iterator skipc;
+        pat_iterator pe, p;
 	int j;
 	Tab *d;
 	int rrr, rr;
-	CHARTYPE *pmd2;
+        pat_iterator pmd2;
 
 	pat.patlen = m;
 	if(m > MAXPAT)
 		abort();
-	memcpy(pat.pat, base, m);
-	skipc = 0;
+        std::copy(base, base + m, pat.pat.begin());
 	d = pat.delta;
 	for(j = 0; j < 256; j++)
 		d[j] = pat.patlen;
-	for(p = pat.pat, pe = p+m-1; p < pe; p++)
+	for(p = pat.pat.begin(), pe = p+m-1; p < pe; p++)
 		d[*p] = pe-p;
 	d[*p] = 0;
-	skipc = (CHARTYPE *)p;
+	skipc = p;
 	rrr = 0;
 	for(rr = 1; rr < m; rr++){
 		if(freq[pat.pat[rr]] < freq[pat.pat[rrr]])
@@ -220,17 +228,18 @@ void humprep(const CHARTYPE* base, int m)
 	}
 	pat.rarec = pat.pat[rrr];
        	pat.rareoff = rrr - (m-1);
-	for(pmd2 = skipc-1; pmd2 >= pat.pat; pmd2--)
+	for(pmd2 = skipc-1; pmd2 >= pat.pat.begin(); pmd2--)
 		if (*pmd2 == *skipc) break;
 	pat.md2 = skipc - pmd2;	/* *pmd2 is first leftward reoccurance of *pe */
 }
 
-const CHARTYPE* humexec(const CHARTYPE* base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator humexec(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
+        RandomAccessIterator e, s, q;
 	Tab *d0 = pat.delta;
-	const CHARTYPE *p, *q;
-	const CHARTYPE *ep;
+        pat_iterator p;
+        pat_iterator ep;
 	int ro, rc;
 	int n1 = pat.patlen-1;
 	int md2 = pat.md2;
@@ -240,7 +249,7 @@ const CHARTYPE* humexec(const CHARTYPE* base, int n)
 	ro = pat.rareoff;
 	rc = pat.rarec;
 
-	ep = pat.pat + pat.patlen-1;
+        ep = pat.pat.begin() + pat.patlen-1;
 	while(s < e){
 	        int k = 0;
 	        while( (k = d0[*(s += k)]) != 0 && (s < e));
@@ -249,7 +258,7 @@ const CHARTYPE* humexec(const CHARTYPE* base, int n)
 		if(s[ro] != rc)
 			goto mismatch;
 
-		for(p = pat.pat, q = s-n1; p < ep; ){
+		for(p = pat.pat.begin(), q = s-n1; p < ep; ){
 			if(*q++ != *p++)
 				goto mismatch;
 		}
@@ -259,14 +268,16 @@ const CHARTYPE* humexec(const CHARTYPE* base, int n)
 	}
 	return e;
 }
-const CHARTYPE* humexec_cnt(const CHARTYPE* base, int n)
+
+template <typename RandomAccessIterator>
+RandomAccessIterator humexec_cnt(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
+        RandomAccessIterator e, s;
 	Tab *d0 = pat.delta;
 	int ro, rc;
 
-	const CHARTYPE *p, *q;
-	const CHARTYPE *ep;
+	pat_iterator p, q;
+	pat_iterator ep;
 	int n1 = pat.patlen-1;
 	int md2 = pat.md2;
 
@@ -276,7 +287,7 @@ const CHARTYPE* humexec_cnt(const CHARTYPE* base, int n)
 	ro = pat.rareoff;
 	rc = pat.rarec;
 
-	ep = pat.pat + pat.patlen-1; pat.cmps = pat.accs = 0;
+	ep = pat.pat.begin() + pat.patlen-1; pat.cmps = pat.accs = 0;
 	while(s < e){
 	        int k = 0;
 	        while( (++pat.accs,(k = d0[*(s += k)])) != 0 && (s < e));
@@ -284,7 +295,7 @@ const CHARTYPE* humexec_cnt(const CHARTYPE* base, int n)
 			break;
 		if(++pat.cmps,(s[ro] != rc))
 			goto mismatch;
-		for(p = pat.pat, q = s-n1; p < ep; ){
+		for(p = pat.pat.begin(), q = s-n1; p < ep; ){
 			if(++pat.cmps,(*q++ != *p++))
 				goto mismatch;
 		}
@@ -295,7 +306,9 @@ const CHARTYPE* humexec_cnt(const CHARTYPE* base, int n)
 	return e;
 }
 
-const CHARTYPE* hume(const CHARTYPE* text, const CHARTYPE* textEnd, const CHARTYPE* pat, const CHARTYPE* patEnd) 
+
+template <typename RandomAccessIterator1, typename RandomAccessIterator2>
+RandomAccessIterator1 hume(RandomAccessIterator1 text, RandomAccessIterator1 textEnd, RandomAccessIterator2 pat, RandomAccessIterator2 patEnd) 
 {
   humprep(pat, patEnd - pat);  
   return humexec(text, textEnd - text);
@@ -328,9 +341,10 @@ RandomAccessIterator1 hume(
 
 */
 
-void fbmprep(const CHARTYPE *base, int m)
+template <typename RandomAccessIterator>
+void fbmprep(RandomAccessIterator base, int m)
 {
-	const CHARTYPE *pe, *p;
+	pat_iterator pe, p;
 	int j;
 	Tab *d;
 	Tab *d2;
@@ -340,12 +354,11 @@ void fbmprep(const CHARTYPE *base, int m)
 	pat.patlen = m;
 	if(m > MAXPAT)
 		abort();
-	memcpy(pat.pat, base, m);
-
+        std::copy(base, base + m, pat.pat.begin());
 	d = pat.delta;
 	for(j = 0; j < 256; j++)
 		d[j] = pat.patlen;
-	for(p = pat.pat, pe = p+m-1; p < pe; p++)
+	for(p = pat.pat.begin(), pe = p+m-1; p < pe; p++)
 		d[*p] = pe-p;
 	d[*p] = 0;
 
@@ -384,13 +397,14 @@ void fbmprep(const CHARTYPE *base, int m)
 	d2[0] = m+1;		/* the case where the match succeeded */
 }
 
-const CHARTYPE* fbmexec(const CHARTYPE *base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator fbmexec(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
+        RandomAccessIterator e, s, q;
 	Tab *d0 = pat.delta;
 
-	const CHARTYPE *p, *q;
-	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+        pat_iterator p;
+        pat_iterator prev(pat.pat.begin() + pat.patlen - 1);
 	Tab *d2 = pat.delta2+1;
 	int k1;
 
@@ -402,28 +416,29 @@ const CHARTYPE* fbmexec(const CHARTYPE *base, int n)
 	        while( (k = d0[*(s += k)]) != 0 && (s < e));
 		if(s >= e)
 			break;
-		for(p = prev, q = s; p > pat.pat; ){
+                for(p = prev, q = s; p > pat.pat.begin(); ){
 			if(*--q != *--p)
 				goto mismatch;
 		}
 		return q;
 	mismatch:
-		k = d2[p-pat.pat];
+                k = d2[p - pat.pat.begin()];
 		k1 = d0[*q];
 		if(k < k1)
 			k = k1;
-		s = q+k;
+                s = RandomAccessIterator(q+k);
 	}
 	return e;
 }
 
-const CHARTYPE* fbmexec_cnt(const CHARTYPE *base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator fbmexec_cnt(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
+        RandomAccessIterator e, s;
 	Tab *d0 = pat.delta;
 
-	const CHARTYPE *p, *q;
-	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+	pat_iterator p, q;
+	pat_iterator prev = pat.pat.begin()+pat.patlen-1;
 	Tab *d2 = pat.delta2+1;
 	int k1;
 
@@ -434,13 +449,13 @@ const CHARTYPE* fbmexec_cnt(const CHARTYPE *base, int n)
 	        while( (++pat.accs,(k = d0[*(s += k)])) != 0 && (s < e));
 		if(s >= e)
 			break;
-		for(p = prev, q = s; p > pat.pat; ){
+		for(p = prev, q = s; p > pat.pat.begin(); ){
 			if(++pat.cmps,(*--q != *--p))
 				goto mismatch;
 		}
 		return q;
 	mismatch:
-		k = d2[p-pat.pat];
+		k = d2[p-pat.pat.begin()];
 		k1 = d0[*q];++pat.accs;
 		if(k < k1)
 			k = k1;
@@ -449,7 +464,8 @@ const CHARTYPE* fbmexec_cnt(const CHARTYPE *base, int n)
 	return e;
 }
 
-const CHARTYPE* fbm(const CHARTYPE* text, const CHARTYPE* textEnd, const CHARTYPE* pat, const CHARTYPE* patEnd) 
+template <typename RandomAccessIterator1, typename RandomAccessIterator2>
+RandomAccessIterator1 fbm(RandomAccessIterator1 text, RandomAccessIterator1 textEnd, RandomAccessIterator2 pat, RandomAccessIterator2 patEnd) 
 {
   fbmprep(pat, patEnd - pat);  
   return fbmexec(text, textEnd - text);
@@ -479,10 +495,10 @@ RandomAccessIterator1 fbm(
 #endif
 }
 */
-
-void gdprep(const CHARTYPE *base, int m)
+template <typename RandomAccessIterator>
+void gdprep(RandomAccessIterator base, int m)
 {
-	const CHARTYPE *pe, *p;
+        pat_iterator pe, p;
 	int j;
 	Tab *d;
 	int j0, k, q, i, jj;
@@ -491,11 +507,11 @@ void gdprep(const CHARTYPE *base, int m)
 	pat.patlen = m;
 	if(m > MAXPAT)
 		abort();
-	memcpy(pat.pat, base, m);
+        std::copy(base, base + m, pat.pat.begin());
 	d = pat.delta;
 	for(j = 0; j < 256; j++)
 		d[j] = pat.patlen;
-	for(p = pat.pat, pe = p+m-1; p < pe; p++)
+	for(p = pat.pat.begin(), pe = p+m-1; p < pe; p++)
 		d[*p] = pe-p;
 	d[*p] = 0;
 	/*
@@ -538,13 +554,14 @@ void gdprep(const CHARTYPE *base, int m)
 	}
 }
 
-const CHARTYPE* gdexec(const CHARTYPE *base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator gdexec(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
+        RandomAccessIterator e, s, q;
 	Tab *d0 = pat.delta;
 
-	const CHARTYPE *p, *q;
-	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+        pat_iterator p;
+        pat_iterator prev = pat.pat.begin()+pat.patlen-1;
 	int kg;
 
 	s = base+pat.patlen-1;
@@ -554,28 +571,29 @@ const CHARTYPE* gdexec(const CHARTYPE *base, int n)
 	        while( (k = d0[*(s += k)]) != 0 && (s < e));
 		if(s >= e)
 			break;
-		for(p = prev, q = s; p > pat.pat; ){
+		for(p = prev, q = s; p > pat.pat.begin(); ){
 			if(*--q != *--p)
 				goto mismatch;
 		}
 		return q;
 	mismatch:
-		if(p < pat.pat)
+		if(p < pat.pat.begin())
 			kg = pat.patlen+1;
 		else
-			kg = pat.dg[p-pat.pat][*q];
+			kg = pat.dg[p-pat.pat.begin()][*q];
 		s = q+kg;
 	}
 	return e;
 }
 
-const CHARTYPE* gdexec_cnt(const CHARTYPE *base, int n)
+template <typename RandomAccessIterator>
+RandomAccessIterator gdexec_cnt(RandomAccessIterator base, int n)
 {
-	const CHARTYPE *e, *s;
-	Tab *d0 = pat.delta;
+        RandomAccessIterator e, s;
+        Tab *d0 = pat.delta;
 
-	const CHARTYPE *p, *q;
-	const CHARTYPE *prev = pat.pat+pat.patlen-1;
+        RandomAccessIterator p, q;
+        RandomAccessIterator prev = pat.pat.begin()+pat.patlen-1;
 	int kg;
 
 	s = base+pat.patlen-1;
@@ -585,23 +603,23 @@ const CHARTYPE* gdexec_cnt(const CHARTYPE *base, int n)
 	        while( (++pat.accs,(k = d0[*(s += k)])) != 0 && (s < e));
 		if(s >= e)
 			break;
-		for(p = prev, q = s; p > pat.pat; ){
+		for(p = prev, q = s; p > pat.pat.begin(); ){
 			if(++pat.cmps,(*--q != *--p))
 				goto mismatch;
 		}
 		return q;
 	mismatch:
-		if(p < pat.pat)
+		if(p < pat.pat.begin())
 			kg = pat.patlen+1;
 		else
-		  {kg = pat.dg[p-pat.pat][*q]; ++pat.accs;}
+		  {kg = pat.dg[p-pat.pat.begin()][*q]; ++pat.accs;}
 		s = q+kg;
 	}
 	return e;
 }
 
-const CHARTYPE* gdbm(const CHARTYPE* text, const CHARTYPE* textEnd, 
-                     const CHARTYPE* pat, const CHARTYPE* patEnd) 
+template <typename RandomAccessIterator1, typename RandomAccessIterator2>
+RandomAccessIterator1 gdbm(RandomAccessIterator1 text, RandomAccessIterator1 textEnd, RandomAccessIterator2 pat, RandomAccessIterator2 patEnd) 
 {
   gdprep(pat, patEnd - pat);  
   return gdexec(text, textEnd - text);
