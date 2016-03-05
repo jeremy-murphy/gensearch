@@ -111,7 +111,7 @@ int main()
     using namespace std;
   ostream_iterator<char> out(cout, "");
   ifstream ifs("small.txt");
-  vector<data> Comment, S1, S2;
+  string Comment, S1, S2;
   const char* separator = "";
   for (;;) {
     

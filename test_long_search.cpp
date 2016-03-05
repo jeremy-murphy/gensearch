@@ -126,7 +126,7 @@ int main()
   typedef map<int, vector<sequence>, less<int> > map_type;
   map_type dictionary;
   sequence S;
-  vector<char> S0;
+  string S0;
   string_input si(dictfile);
   while (si != string_input()) {
     S0 = *si++;
