@@ -122,7 +122,7 @@ int main()
 
   
   ifstream dictfile(wordFileName);
-  typedef istream_iterator<string, ptrdiff_t> string_input;
+  typedef istream_iterator<string> string_input;
   typedef map<int, vector<sequence>, less<int> > map_type;
   map_type dictionary;
   sequence S;

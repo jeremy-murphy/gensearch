@@ -114,7 +114,7 @@ int main()
   map_type dictionary;
   
   ifstream ifs("long.txt");
-  typedef istream_iterator<string, ptrdiff_t> string_input;
+  typedef istream_iterator<string> string_input;
   copy(string_input(ifs), string_input(), back_inserter(S1));
   
 
