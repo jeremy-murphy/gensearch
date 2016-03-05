@@ -91,17 +91,6 @@ void compute_next(ForwardIterator pattern,
   }
 }
 
-template <class ForwardIterator1, class ForwardIterator2>
-inline ForwardIterator1 search(ForwardIterator1 text,
-                               ForwardIterator1 textEnd,
-                               ForwardIterator2 pattern,
-                               ForwardIterator2 patternEnd)
-{
-  typedef std::iterator_traits<ForwardIterator1> T;
-  return __search(text, textEnd, pattern, patternEnd, typename T::iterator_category());
-}
-
-
 
 template <class ForwardIterator1, class ForwardIterator2>
 inline ForwardIterator1 __search(ForwardIterator1 text,
@@ -219,6 +208,16 @@ inline RandomAccessIterator1 __search(RandomAccessIterator1 text,
   return search_hashed(text, textEnd, pattern, patternEnd, (Trait*)0 ); 
 }
 
+
+template <class ForwardIterator1, class ForwardIterator2>
+inline ForwardIterator1 search(ForwardIterator1 text,
+                               ForwardIterator1 textEnd,
+                               ForwardIterator2 pattern,
+                               ForwardIterator2 patternEnd)
+{
+    typedef std::iterator_traits<ForwardIterator1> T;
+    return __search(text, textEnd, pattern, patternEnd, typename T::iterator_category());
+}
 
 
 
