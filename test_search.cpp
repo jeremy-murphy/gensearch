@@ -14,17 +14,6 @@
 #include "DNA_search.h"
 int Base_Line;
 
-template <class Container>
-void get(std::istream& is, Container& S) {
-  S.erase(S.begin(), S.end());
-  char ch;
-  while (is.get(ch)) {
-    if (ch == '\n')
-      break;
-    S.push_back(ch);
-  }
-}
-
 
 typedef unsigned char data;
 
@@ -112,35 +101,30 @@ int main()
   const char* separator = "";
   for (;;) {
     
-    get(ifs, Comment);
+    getline(ifs, Comment);
     if (ifs.eof())
       break;
     copy(Comment.begin(), Comment.end(), out); cout << endl;
     
-    get(ifs, S1);
-    
+    getline(ifs, S1);
     if (ifs.eof()) {
       cout << "**** Unexpected end of file." << endl;
       exit(1);
     }
-    
     
     cout << "Text string:......";
     copy(S1.begin(), S1.end(), out);
     cout << endl;
     
-    get(ifs, S2);
+    getline(ifs, S2);
     
     if (ifs.eof()) {
       cout << "**** Unexpected end of file." << endl;
       exit(1);
     }
     
-    
     cout << "Pattern string:...";
     copy(S2.begin(), S2.end(), out); cout << endl;
-    
-
     
     Base_Line = 0;
     for (int k = 1; k < number_of_algorithms; ++k) {
@@ -148,7 +132,5 @@ int main()
       Report(algorithm_enumeration(k), S1, S2, separator);
     }
     cout << endl;
-    
-
   }
 }
