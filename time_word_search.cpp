@@ -17,8 +17,8 @@
 #include <ctime>
 //#include <list>
 //#define LIST_TEST
-typedef string data;
-typedef vector<data> sequence;
+typedef std::string data;
+typedef std::vector<data> sequence;
 #if __STL_ITERATOR_TRAITS_NEEDED 
   ptr_iterator_traits(data);
 #endif
@@ -28,7 +28,7 @@ int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 double Base_Time = 0.0;
 
 struct search_word_trait {
-  typedef vector<string>::const_iterator RAI;
+    typedef std::vector<std::string>::const_iterator RAI;
   enum {hash_range_max = 256};
   enum {suffix_size = 1};
   inline static unsigned int hash(RAI i) {
@@ -75,8 +75,9 @@ inline void
 
 template <class Container>
 void Run(int k, const Container& S1, 
-         const vector<Container>& dictionary, int Pattern_Size)
+         const std::vector<Container>& dictionary, int Pattern_Size)
 {
+    using namespace std;
   typename Container::const_iterator P;
   int F = 0, d, K;
   double Start_Time, Finish_Time, Time_Taken;
@@ -127,6 +128,7 @@ void Run(int k, const Container& S1,
 
 int main() 
 {  
+    using namespace std;
   int j;
   
   cout << "Input number of tests (for each pattern size): " << flush;

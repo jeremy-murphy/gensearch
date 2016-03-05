@@ -20,7 +20,7 @@
 #include <string>
 typedef unsigned char data;
 #ifndef APCC_BUG
-  typedef vector<data> sequence;
+typedef std::vector<data> sequence;
 #else
 # define sequence vector<data>
 #endif
@@ -86,8 +86,9 @@ inline void
 
 template <class Container>
 void Run(int k, const Container& S1, 
-         const vector<Container>& dictionary, int Pattern_Size)
+         const std::vector<Container>& dictionary, int Pattern_Size)
 {
+    using namespace std;
   typename Container::const_iterator P;
   int F = 0, d, K;
   double Start_Time, Finish_Time, Time_Taken;
@@ -139,6 +140,7 @@ void Run(int k, const Container& S1,
 
 int main()
 { 
+    using namespace std;
   int j;
   
   cout << "Input number of tests (for each pattern size): " << flush;

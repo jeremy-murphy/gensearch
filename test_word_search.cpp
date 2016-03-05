@@ -14,8 +14,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-typedef string data;
-typedef vector<string> sequence;
+typedef std::string data;
+typedef std::vector<std::string> sequence;
 #if __STL_ITERATOR_TRAITS_NEEDED 
   ptr_iterator_traits(data);
 #endif
@@ -23,7 +23,7 @@ sequence S1, S2;
 int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 
 struct search_word_trait {
-  typedef vector<string>::const_iterator RAI;
+    typedef std::vector<std::string>::const_iterator RAI;
   enum {hash_range_max = 256};
   enum {suffix_size = 1};
   inline static unsigned int hash(RAI i) {
@@ -72,6 +72,7 @@ template <class Container>
 void Report(algorithm_enumeration k, const Container& S1, 
             const Container& S2, const char* separator)
 {
+    using namespace std;
   typename Container::const_iterator P;
   Algorithm(k, S1, S2, P);
   cout << "  String " << '"';
@@ -91,6 +92,7 @@ void Report(algorithm_enumeration k, const Container& S1,
 
 int main() 
 {  
+    using namespace std;
   int F, K, j;
   
   cout << "Input number of tests (for each pattern size): " << flush;

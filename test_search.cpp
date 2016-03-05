@@ -88,6 +88,7 @@ template <class Container>
 void Report(algorithm_enumeration k, const Container& S1, 
             const Container& S2, const char* separator)
 {
+    using namespace std;
   typename Container::const_iterator P;
   Algorithm(k, S1, S2, P);
   cout << "  String " << '"';
@@ -107,6 +108,7 @@ void Report(algorithm_enumeration k, const Container& S1,
 
 int main() 
 {  
+    using namespace std;
   ostream_iterator<char> out(cout, "");
   ifstream ifs("small.txt");
   vector<data> Comment, S1, S2;

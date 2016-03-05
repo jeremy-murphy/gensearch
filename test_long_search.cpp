@@ -17,7 +17,7 @@
 #include <fstream>
 #include <string>
 typedef unsigned char data;
-typedef vector<data> sequence;
+typedef std::vector<data> sequence;
 sequence S1, S2;
 
 int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
@@ -82,6 +82,7 @@ template <class Container>
 void Report(algorithm_enumeration k, const Container& S1, 
             const Container& S2, const char* separator)
 {
+    using namespace std;
   typename Container::const_iterator P;
   Algorithm(k, S1, S2, P);
   cout << "  String " << '"';
@@ -101,6 +102,7 @@ void Report(algorithm_enumeration k, const Container& S1,
 
 int main() 
 {  
+    using namespace std;
   int F, K, j;
   
   cout << "Input number of tests (for each pattern size): " << flush;

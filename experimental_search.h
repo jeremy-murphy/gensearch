@@ -64,8 +64,8 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
                                         RandomAccessIterator2 pattern,
                                         RandomAccessIterator2 patternEnd)
 {
-  typedef typename iterator_traits<RandomAccessIterator1>::difference_type Distance1;
-  typedef typename iterator_traits<RandomAccessIterator2>::difference_type Distance2;
+  typedef typename std::iterator_traits<RandomAccessIterator1>::difference_type Distance1;
+  typedef typename std::iterator_traits<RandomAccessIterator2>::difference_type Distance2;
   typedef large_alphabet_trait Trait;
   if (pattern == patternEnd) 
     return text;
@@ -74,7 +74,7 @@ RandomAccessIterator1 search_no_hashing(RandomAccessIterator1 text,
   pattern_size = patternEnd - pattern;
   if (pattern_size < Trait::suffix_size)
     return __search_L(text, textEnd, pattern, patternEnd);
-  vector<Distance1> next;
+  std::vector<Distance1> next;
   skewed_array<Distance1, RandomAccessIterator2, Trait::hash_range_max+1>
     skip(pattern_size - Trait::suffix_size + 1, pattern, patternEnd);
   

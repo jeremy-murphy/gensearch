@@ -97,8 +97,8 @@ inline ForwardIterator1 search(ForwardIterator1 text,
                                ForwardIterator2 pattern,
                                ForwardIterator2 patternEnd)
 {
-  typedef iterator_traits<ForwardIterator1> T;
-  return __search(text, textEnd, pattern, patternEnd, T::iterator_category());
+  typedef std::iterator_traits<ForwardIterator1> T;
+  return __search(text, textEnd, pattern, patternEnd, typename T::iterator_category());
 }
 
 
@@ -108,7 +108,7 @@ inline ForwardIterator1 __search(ForwardIterator1 text,
                                  ForwardIterator1 textEnd,
                                  ForwardIterator2 pattern,
                                  ForwardIterator2 patternEnd,
-                                 forward_iterator_tag)
+                                 std::forward_iterator_tag)
 {
   return __search_L(text, textEnd, pattern, patternEnd);
 }
@@ -119,12 +119,12 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
                             ForwardIterator2 pattern,
                             ForwardIterator2 patternEnd)
 {
-  typedef typename iterator_traits<ForwardIterator2>::difference_type Distance2;
+  typedef typename std::iterator_traits<ForwardIterator2>::difference_type Distance2;
   ForwardIterator1 advance, hold;
   ForwardIterator2 p, p1;
   Distance2 j, m;
-  vector<Distance2> next;
-  vector<ForwardIterator2> pattern_iterator;
+  std::vector<Distance2> next;
+  std::vector<ForwardIterator2> pattern_iterator;
   
   compute_next(pattern, patternEnd, next, pattern_iterator);
   
