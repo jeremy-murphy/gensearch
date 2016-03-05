@@ -6,7 +6,6 @@ struct large_alphabet_trait {
   enum {hash_range_max = (1u << (sizeof(T) * 8)) - 1};
 };
 
-#ifdef __STL_MEMBER_TEMPLATES
   template <>
   struct search_trait<unsigned short> {
     enum {hash_range_max = 256};
@@ -16,16 +15,6 @@ struct large_alphabet_trait {
       return (unsigned char)(*i);
     }
   };
-#else
-  template <>
-  struct search_trait<unsigned short> {
-    enum {hash_range_max = 256};
-    enum {suffix_size = 1};
-    inline static unsigned int hash(const unsigned short* i) {
-      return (unsigned char)(*i);
-    }
-  };
-#endif
 
 template<class T>
 class skewed_value {
