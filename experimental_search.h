@@ -7,7 +7,8 @@ struct large_alphabet_trait {
 };
 
 #ifdef __STL_MEMBER_TEMPLATES
-  template <> struct search_trait<unsigned short> {
+  template <>
+  struct search_trait<unsigned short> {
     enum {hash_range_max = 256};
     enum {suffix_size = 1};
     template <class RandomAccessIterator>
@@ -16,6 +17,7 @@ struct large_alphabet_trait {
     }
   };
 #else
+  template <>
   struct search_trait<unsigned short> {
     enum {hash_range_max = 256};
     enum {suffix_size = 1};
