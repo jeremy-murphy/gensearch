@@ -15,7 +15,7 @@
 int Base_Line;
 
 
-typedef unsigned char data;
+typedef char data;
 
 enum algorithm_enumeration {
      Dummy, SF, L, HAL, ABM, TBM, GBM, HAL2, HAL3, HAL4, HAL5
