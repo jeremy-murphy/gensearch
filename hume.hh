@@ -33,7 +33,7 @@ typedef TABTYPE Tab;
 struct pattern
 {
 	int patlen;
-        std::vector<char> pat;
+        std::vector<unsigned char> pat;
 	Tab delta1[256];
 	Tab delta2[257];
         Tab delta[256];
@@ -44,9 +44,9 @@ struct pattern
         long cmps, accs;
 };
 
-static pattern pat = {0, std::vector<char>(MAXPAT)};
+static pattern pat = {0, std::vector<unsigned char>(MAXPAT)};
 
-typedef std::vector<char>::const_iterator pat_iterator;
+typedef std::vector<unsigned char>::const_iterator pat_iterator;
 
 template <typename RandomAccessIterator>
 void bmprep(RandomAccessIterator base, int m)
@@ -252,7 +252,7 @@ RandomAccessIterator humexec(RandomAccessIterator base, int n)
         ep = pat.pat.begin() + pat.patlen-1;
 	while(s < e){
 	        int k = 0;
-	        while( (k = d0[*(s += k)]) != 0 && (s < e));
+                while( (k = d0[static_cast<char unsigned>(*(s += k))]) != 0 && (s < e));
 		if(s >= e)
 			break;
 		if(s[ro] != rc)
@@ -366,7 +366,7 @@ void fbmprep(RandomAccessIterator base, int m)
 	for(j = 0; j < 256; j++)
 		d2[j] = m;
 	for(j = 0; j < m; j++)
-		d2[base[j]] = m-1-j;
+            d2[static_cast<char unsigned>(base[j])] = m-1-j;
 	d2 = pat.delta2;
 	for(j = 1; j < m; j++)
 		d2[j] = 2*m-j;
@@ -413,7 +413,7 @@ RandomAccessIterator fbmexec(RandomAccessIterator base, int n)
 
 	while(s < e){
 	        int k = 0;
-	        while( (k = d0[*(s += k)]) != 0 && (s < e));
+                while( (k = d0[static_cast<char unsigned>(*(s += k))]) != 0 && (s < e));
 		if(s >= e)
 			break;
                 for(p = prev, q = s; p > pat.pat.begin(); ){
@@ -423,7 +423,7 @@ RandomAccessIterator fbmexec(RandomAccessIterator base, int n)
 		return q;
 	mismatch:
                 k = d2[p - pat.pat.begin()];
-		k1 = d0[*q];
+                k1 = d0[static_cast<char unsigned>(*q)];
 		if(k < k1)
 			k = k1;
                 s = RandomAccessIterator(q+k);
@@ -568,7 +568,7 @@ RandomAccessIterator gdexec(RandomAccessIterator base, int n)
 	e = base+n;
 	while(s < e){
 	        int k = 0;
-	        while( (k = d0[*(s += k)]) != 0 && (s < e));
+                while( (k = d0[static_cast<char unsigned>(*(s += k))]) != 0 && (s < e));
 		if(s >= e)
 			break;
 		for(p = prev, q = s; p > pat.pat.begin(); ){
@@ -580,7 +580,7 @@ RandomAccessIterator gdexec(RandomAccessIterator base, int n)
 		if(p < pat.pat.begin())
 			kg = pat.patlen+1;
 		else
-			kg = pat.dg[p-pat.pat.begin()][*q];
+                        kg = pat.dg[p-pat.pat.begin()][static_cast<char unsigned>(*q)];
 		s = q+kg;
 	}
 	return e;
