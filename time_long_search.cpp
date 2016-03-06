@@ -25,7 +25,7 @@ typedef std::vector<data> sequence;
 # define sequence vector<data>
 #endif
 sequence S1;
-int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
+unsigned int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 double Base_Time = 0.0;
 
 enum algorithm_enumeration {
@@ -90,7 +90,7 @@ void Run(int k, const Container& S1,
 {
     using namespace std;
   typename Container::const_iterator P;
-  int F = 0, d, K;
+  unsigned F = 0, d, K;
   double Start_Time, Finish_Time, Time_Taken;
   long Total_Search = 0;
   Start_Time = clock();
@@ -139,14 +139,14 @@ void Run(int k, const Container& S1,
 int main()
 { 
     using namespace std;
-  int j;
+  unsigned j;
   
   cout << "Input number of tests (for each pattern size): " << flush;
   cin >> Number_Of_Tests;
   cout << "Input number of pattern sizes: " << flush;
   cin >> Number_Of_Pattern_Sizes;
   cout << "Input pattern sizes: " << flush;
-  vector<int> Pattern_Size(Number_Of_Pattern_Sizes);
+  vector<unsigned> Pattern_Size(Number_Of_Pattern_Sizes);
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j)
     cin >> Pattern_Size[j];
   cout << "\nNumber of tests: " << Number_Of_Tests << endl;
@@ -185,8 +185,8 @@ int main()
     vector<sequence>& diction = dictionary[Pattern_Size[j]];
     if (diction.size() > Number_Of_Tests) {
       vector<sequence> temp;
-      int Skip_Amount = diction.size() / Number_Of_Tests;
-      for (int T = 0; T < Number_Of_Tests; ++T) {
+      unsigned Skip_Amount = diction.size() / Number_Of_Tests;
+      for (unsigned T = 0; T < Number_Of_Tests; ++T) {
          temp.push_back(diction[T * Skip_Amount]);
       }
       diction = temp;

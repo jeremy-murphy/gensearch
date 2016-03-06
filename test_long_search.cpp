@@ -20,7 +20,7 @@ typedef unsigned char data;
 typedef std::vector<data> sequence;
 sequence S1, S2;
 
-int Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
+unsigned Base_Line, Number_Of_Tests, Number_Of_Pattern_Sizes, Increment;
 
 enum algorithm_enumeration {
      Dummy, SF, L, HAL, ABM, TBM, GBM, HAL2, HAL3, HAL4, HAL5
@@ -41,11 +41,11 @@ const char* algorithm_names[] = {
   const char wordFileName[] = "dnaword.txt";
 #endif
 
-const int number_of_algorithms = sizeof(alg)/sizeof(alg[0]); 
+const unsigned number_of_algorithms = sizeof(alg)/sizeof(alg[0]); 
 
 template <class Container, class Container__const_iterator>
 inline void
-   Algorithm(int k, const Container& x, const Container& y, 
+   Algorithm(unsigned k, const Container& x, const Container& y, 
              Container__const_iterator& result)
 {
   switch (alg[k]) {
@@ -103,14 +103,14 @@ void Report(algorithm_enumeration k, const Container& S1,
 int main() 
 {  
     using namespace std;
-  int F, K, j;
+  unsigned F, K, j;
   
   cout << "Input number of tests (for each pattern size): " << flush;
   cin >> Number_Of_Tests;
   cout << "Input number of pattern sizes: " << flush;
   cin >> Number_Of_Pattern_Sizes;
   cout << "Input pattern sizes: " << flush;
-  vector<int> Pattern_Size(Number_Of_Pattern_Sizes);
+  vector<unsigned> Pattern_Size(Number_Of_Pattern_Sizes);
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j)
     cin >> Pattern_Size[j];
   cout << "\nNumber of tests: " << Number_Of_Tests << endl;
@@ -123,7 +123,7 @@ int main()
   
   ifstream dictfile(wordFileName);
   typedef istream_iterator<string> string_input;
-  typedef map<int, vector<sequence>, less<int> > map_type;
+  typedef map<unsigned, vector<sequence>, less<unsigned> > map_type;
   map_type dictionary;
   sequence S;
   string S0;
@@ -149,8 +149,8 @@ int main()
     vector<sequence>& diction = dictionary[Pattern_Size[j]];
     if (diction.size() > Number_Of_Tests) {
       vector<sequence> temp;
-      int Skip_Amount = diction.size() / Number_Of_Tests;
-      for (int T = 0; T < Number_Of_Tests; ++T) {
+      unsigned Skip_Amount = diction.size() / Number_Of_Tests;
+      for (unsigned T = 0; T < Number_Of_Tests; ++T) {
          temp.push_back(diction[T * Skip_Amount]);
       }
       diction = temp;
@@ -179,7 +179,7 @@ int main()
     
       
       Base_Line = 0;
-      for (int k = 1; k < number_of_algorithms; ++k) {
+      for (unsigned k = 1; k < number_of_algorithms; ++k) {
         cout << "Using " << algorithm_names[k] << ":" << endl;
         Report(algorithm_enumeration(k), S1, S2, separator);
       }
@@ -194,7 +194,7 @@ int main()
       S2 = dictionary[Pattern_Size[j]][K];
       
       Base_Line = 0;
-      for (int k = 1; k < number_of_algorithms; ++k) {
+      for (unsigned k = 1; k < number_of_algorithms; ++k) {
         cout << "Using " << algorithm_names[k] << ":" << endl;
         Report(algorithm_enumeration(k), S1, S2, separator);
       }
