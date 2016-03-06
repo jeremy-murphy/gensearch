@@ -92,11 +92,13 @@ void Report(algorithm_enumeration k, const Container& S1,
 }
 
 
-int main() 
+int main(int argc, char **argv) 
 {  
     using namespace std;
   ostream_iterator<char> out(cout, "");
-  ifstream ifs("small.txt");
+  ifstream ifs(argc > 1 ? argv[1] : "small.txt");
+  if (!ifs.is_open())
+      return 1;
   string Comment, S1, S2;
   const char* separator = "";
   for (;;) {
