@@ -104,8 +104,7 @@ void Run(int k, const Container& S1,
     F += Increment;
     
     Algorithm(k, S1, S2, P);
-    d = 0;
-    distance(S1.begin(), P, d);
+    d = distance(S1.begin(), P);
     Total_Search += d + Pattern_Size;
     
 
@@ -114,8 +113,7 @@ void Run(int k, const Container& S1,
     S2 = dictionary[K];
     
     Algorithm(k, S1, S2, P);
-    d = 0;
-    distance(S1.begin(), P, d);
+    d = distance(S1.begin(), P);
     Total_Search += d + Pattern_Size;
     
 
