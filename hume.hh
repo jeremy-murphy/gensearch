@@ -22,6 +22,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+#include <algorithm>
 
 #define	MAXPAT	256
 
@@ -60,10 +61,10 @@ void bmprep(RandomAccessIterator base, int m)
 		abort();
         std::copy(base, base + m, pat.pat.begin());
 	d2 = pat.delta1;
-	for(j = 0; j < 256; j++)
-		d2[j] = m;
+        std::fill(d2, d2 + 256, m);
 	for(j = 0; j < m; j++)
 		d2[base[j]] = m-1-j;
+        
 	d2 = pat.delta2;
 	for(j = 1; j < m; j++)
 		d2[j] = 2*m-j;
@@ -198,7 +199,6 @@ RandomAccessIterator1 slowbm(
 */
 
 #include "freq.h"
-#include <algorithm>
 
 template <typename RandomAccessIterator>
 void humprep(RandomAccessIterator base, int m)

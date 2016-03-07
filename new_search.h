@@ -127,11 +127,14 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
   
   p1 = pattern; ++p1;
   while (text != textEnd) {
-    
+    /*
     while (*text != *pattern) 
       if (++text == textEnd)
         return textEnd;
-    
+      */
+     text = std::find(text, textEnd, *pattern);
+    if (text == textEnd)
+        return textEnd;
   
     
     p = p1; j = 1;
