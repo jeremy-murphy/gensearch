@@ -1,9 +1,10 @@
 
 #ifndef NEW_SEARCH
 #  define NEW_SEARCH
-#  include <vector>
 #  include "search_traits.h"
 #  include <iterator>
+#  include <algorithm>
+#  include <vector>
 #  ifdef __STL_ITERATOR_TRAITS_NEEDED
      
      template <class Iterator>
@@ -108,12 +109,13 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
                             ForwardIterator2 pattern,
                             ForwardIterator2 patternEnd)
 {
+    using namespace std;
   typedef typename std::iterator_traits<ForwardIterator2>::difference_type Distance2;
   ForwardIterator1 advance, hold;
   ForwardIterator2 p, p1;
   Distance2 j, m;
-  std::vector<Distance2> next;
-  std::vector<ForwardIterator2> pattern_iterator;
+  vector<Distance2> next;
+  vector<ForwardIterator2> pattern_iterator;
   
   compute_next(pattern, patternEnd, next, pattern_iterator);
   
@@ -127,12 +129,7 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
   
   p1 = pattern; ++p1;
   while (text != textEnd) {
-    /*
-    while (*text != *pattern) 
-      if (++text == textEnd)
-        return textEnd;
-      */
-     text = std::find(text, textEnd, *pattern);
+     text = find(text, textEnd, *pattern);
     if (text == textEnd)
         return textEnd;
   
