@@ -35,16 +35,15 @@ const char* algorithm_names[] = {
      "selection code", "SF", "L", "HAL", "ABM", "TBM", "GBM", 
      "HAL2", "HAL3", "HAL4", "HAL5"
 };
-
-#ifndef DNA_TEST
-  algorithm_enumeration alg[] = {Dummy, SF, L, HAL, ABM, TBM};
   const char textFileName[] = "long.txt";
   const char wordFileName[] = "words.txt";
+
+#define DNA_TEST
+#ifndef DNA_TEST
+  algorithm_enumeration alg[] = {Dummy, TBM};
 #else
   algorithm_enumeration alg[] = {Dummy, SF, L, HAL, ABM, GBM, 
                                  HAL2, HAL3, HAL4, HAL5};
-  const char textFileName[] = "dnatext.txt";
-  const char wordFileName[] = "dnaword.txt";
 #endif
 
 const int number_of_algorithms = sizeof(alg)/sizeof(alg[0]); 
