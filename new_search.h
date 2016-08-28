@@ -5,6 +5,7 @@
 #  include <iterator>
 #  include <algorithm>
 #  include <vector>
+#  include <boost/array.hpp>
 #  ifdef __STL_ITERATOR_TRAITS_NEEDED
      
      template <class Iterator>
@@ -243,15 +244,17 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
                                     RandomAccessIterator2 patternEnd,
                                     Trait*)
 {
-  typedef typename std::iterator_traits<RandomAccessIterator1>::difference_type Distance1;
-  typedef typename std::iterator_traits<RandomAccessIterator2>::difference_type Distance2;
+    using namespace std;
+  typedef typename iterator_traits<RandomAccessIterator1>::difference_type Distance1;
+  typedef typename iterator_traits<RandomAccessIterator2>::difference_type Distance2;
   if (pattern == patternEnd) return text;
   Distance2 const pattern_size = patternEnd - pattern;
   Distance2 j, m;
   if (Trait::suffix_size == 0 || pattern_size < Trait::suffix_size)
     return __search_L(text, textEnd, pattern, patternEnd);
   Distance1 i, k, large, adjustment, mismatch_shift, text_size;
-  std::vector<Distance1> next, skip;
+  vector<Distance1> next;
+  boost::array<Distance1, Trait::hash_range_max> skip;
   
   k = 0; 
   text_size = textEnd - text;
@@ -260,9 +263,7 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   m = next.size();
-  skip.reserve(Trait::hash_range_max); // TODO: This could be static.
-  for (i = 0; i < Trait::hash_range_max; ++i)
-    skip.push_back(m - Trait::suffix_size + 1);
+  fill(skip.begin(), skip.end(), m - Trait::suffix_size + 1);
   for (j = Trait::suffix_size - 1; j < m - 1; ++j)
     skip[Trait::hash(pattern + j)] = m - 1 - j;
   mismatch_shift = skip[Trait::hash(pattern + m - 1)];
