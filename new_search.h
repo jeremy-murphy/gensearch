@@ -1,4 +1,3 @@
-
 #ifndef NEW_SEARCH
 #  define NEW_SEARCH
 #  include "search_traits.h"
@@ -276,9 +275,11 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   for(;;) {
     k += pattern_size - 1;
     if (k >= 0) break;
-     do {
-      k += skip[Trait::hash(textEnd + k)]; // hot
-     } while (k < 0); // hotter
+     do { // this loop is hot for data read
+         unsigned int const index = Trait::hash(textEnd + k);
+         Distance1 const increment = skip[index];
+      k += increment;
+     } while (k < 0);
     if (k < pattern_size)
       return textEnd;
     k -= adjustment;
