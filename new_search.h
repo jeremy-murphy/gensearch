@@ -221,6 +221,20 @@ inline ForwardIterator1 search(ForwardIterator1 text,
 }
 
 
+// If I had a dollar for every time I wrote this functor...
+template <typename T>
+struct accumulator
+{
+    T init;
+    
+    accumulator(T const &init) : init(init) {}
+    
+    T operator()()
+    {
+        return init++;
+    }
+};
+
 
 template <class RandomAccessIterator1, class RandomAccessIterator2, class Trait>
 RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
