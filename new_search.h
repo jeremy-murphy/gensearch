@@ -245,6 +245,7 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   m = next.size();
+  skip.reserve(Trait::hash_range_max);
   for (i = 0; i < Trait::hash_range_max; ++i)
     skip.push_back(m - Trait::suffix_size + 1);
   for (j = Trait::suffix_size - 1; j < m - 1; ++j)
