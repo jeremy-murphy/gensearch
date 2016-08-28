@@ -246,7 +246,7 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   if (next.size() == 1)
     return find(text, textEnd, *pattern);
   m = next.size();
-  skip.reserve(Trait::hash_range_max);
+  skip.reserve(Trait::hash_range_max); // TODO: This could be static.
   for (i = 0; i < Trait::hash_range_max; ++i)
     skip.push_back(m - Trait::suffix_size + 1);
   for (j = Trait::suffix_size - 1; j < m - 1; ++j)
@@ -261,10 +261,9 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
   for(;;) {
     k += pattern_size - 1;
     if (k >= 0) break;
-    
-    do {
-      k += skip[Trait::hash(textEnd + k)]; 
-    } while (k < 0);
+     do {
+      k += skip[Trait::hash(textEnd + k)]; // hot
+     } while (k < 0); // hotter
     if (k < pattern_size)
       return textEnd;
     k -= adjustment;
