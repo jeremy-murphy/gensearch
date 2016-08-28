@@ -52,7 +52,7 @@ void compute_next(RandomAccessIterator pattern,
 {
   Distance const pattern_size = patternEnd - pattern;
   Distance j = 0, t = -1;
-  next.reserve(32);
+  next.reserve(pattern_size);
   next.push_back(-1);
   while (j < pattern_size - 1) {
     while (t >= 0 && pattern[j] != pattern[t]) 
