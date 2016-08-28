@@ -12,7 +12,7 @@
     enum {hash_range_max = 512};
     enum {suffix_size = 3};
     template <class RAI>
-    inline static unsigned int hash(RAI i) {
+    inline static unsigned short int hash(RAI i) {
       return (*(i-2) + (*(i-1) << 3) + ((*i) << 6)) & 511;
     }
   };
