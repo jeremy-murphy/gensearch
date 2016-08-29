@@ -80,12 +80,10 @@ void compute_next(ForwardIterator pattern,
     pattern_iterator.reserve(32);
     next.push_back(-1);
     pattern_iterator.push_back(pattern);
-    for (;;)
+    ForwardIterator advance = pattern;
+    ++advance;
+    for (; advance != patternEnd; ++advance)
     {
-        ForwardIterator advance = pattern;
-        ++advance;
-        if (advance == patternEnd)
-            break;
         while (t >= 0 && *pattern != *pattern_iterator[t])
             t = next[t];
         ++pattern;
