@@ -18,9 +18,9 @@
 #include <fstream>
 #include <ctime>
 #include <string>
-typedef unsigned char data;
+typedef char data;
 #ifndef APCC_BUG
-typedef std::vector<data> sequence;
+typedef std::string sequence;
 #else
 # define sequence vector<data>
 #endif
