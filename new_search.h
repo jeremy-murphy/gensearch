@@ -117,7 +117,7 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
 {
     using namespace std;
     typedef typename std::iterator_traits<ForwardIterator2>::difference_type Distance2;
-    ForwardIterator1 advance, hold;
+    ForwardIterator1 advance_, hold;
     ForwardIterator2 p, p1;
     Distance2 j, m;
     vector<Distance2> next;
@@ -167,11 +167,10 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
                 ++j;
                 if (p == patternEnd)
                 {
-                    advance = hold;
-                    for (int i = m; --i >= 0;)
-                        ++advance;
-                    while (advance != text)
-                        ++advance, ++hold;
+                    advance_ = hold;
+                    advance(advance_, m);
+                    while (advance_ != text)
+                        ++advance_, ++hold;
                     return hold;
                 }
                 if (text == textEnd)
