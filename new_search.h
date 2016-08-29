@@ -60,10 +60,7 @@ void compute_next(RandomAccessIterator pattern,
             t = next[t];
         ++j;
         ++t;
-        if (pattern[j] == pattern[t])
-            next.push_back(next[t]);
-        else
-            next.push_back(t);
+        next.push_back(pattern[j] == pattern[t] ? next[t] : t);
     }
 }
 
