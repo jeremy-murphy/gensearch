@@ -243,7 +243,7 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
     Distance2 j, m;
     if (Trait::suffix_size == 0 || pattern_size < Trait::suffix_size)
         return __search_L(text, textEnd, pattern, patternEnd);
-    Distance1 i, k, large, adjustment, mismatch_shift, text_size;
+    Distance1 k, large, adjustment, mismatch_shift, text_size;
     vector<Distance1> next;
     boost::array<Distance1, Trait::hash_range_max> skip;
 
