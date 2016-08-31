@@ -51,7 +51,7 @@ struct pattern
     pattern() : patlen(0) {}
 };
 
-static pattern pat = {0, std::vector<unsigned char>(MAXPAT)};
+static pattern pat;
 
 typedef typename array_type::const_iterator pat_iterator;
 
