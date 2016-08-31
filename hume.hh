@@ -553,7 +553,7 @@ void gdprep(RandomAccessIterator base, int m)
 			pat.dg[jj][i] = m-1-jj+rmin[jj];
 	}
 	for(k = m-2; k >= 0; k--){
-		for(i = k, jj = m-1; pat.pat[i] == pat.pat[jj]; i--, jj--)
+		for(i = k, jj = m-1; i >= 0 && pat.pat[i] == pat.pat[jj]; i--, jj--)
 			;
 		if((i >= 0) && (pat.dg[jj][pat.pat[i]]>=m))
 			pat.dg[jj][pat.pat[i]] = m-1-i;
