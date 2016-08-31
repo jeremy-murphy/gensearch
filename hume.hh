@@ -19,6 +19,8 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
+#include <boost/array.hpp>
+
 #include <cstring>
 #include <cstdlib>
 #include <vector>
@@ -31,23 +33,27 @@
 #endif
 typedef TABTYPE Tab;
 
+typedef boost::array<unsigned char, MAXPAT> array_type;
+
 struct pattern
 {
-	int patlen;
-        std::vector<unsigned char> pat;
-	Tab delta1[256];
-	Tab delta2[257];
-        Tab delta[256];
-        Tab dg[MAXPAT][128];
-        int rarec, rareoff;
-        int md2;
+    int patlen;
+    array_type pat;
+    Tab delta1[256];
+    Tab delta2[257];
+    Tab delta[256];
+    Tab dg[MAXPAT][128];
+    int rarec, rareoff;
+    int md2;
 
-        long cmps, accs;
+    long cmps, accs;
+    
+    pattern() : patlen(0) {}
 };
 
 static pattern pat = {0, std::vector<unsigned char>(MAXPAT)};
 
-typedef std::vector<unsigned char>::const_iterator pat_iterator;
+typedef typename array_type::const_iterator pat_iterator;
 
 template <typename RandomAccessIterator>
 void bmprep(RandomAccessIterator base, int m)
