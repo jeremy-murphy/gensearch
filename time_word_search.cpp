@@ -124,19 +124,24 @@ void Run(int k, const Container& S1,
 }
 
 
-int main() 
+int main(int argc, char **argv) 
 {  
     using namespace std;
   unsigned j;
-  
+/*  
   cout << "Input number of tests (for each pattern size): " << flush;
   cin >> Number_Of_Tests;
   cout << "Input number of pattern sizes: " << flush;
   cin >> Number_Of_Pattern_Sizes;
   cout << "Input pattern sizes: " << flush;
+*/
+  if (argc < 4)
+      return 1;
+  Number_Of_Tests = strtoul(argv[1], NULL, 10);
+  Number_Of_Pattern_Sizes = strtoul(argv[2], NULL, 10);
   vector<unsigned> Pattern_Size(Number_Of_Pattern_Sizes);
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j)
-    cin >> Pattern_Size[j];
+      Pattern_Size[j] = strtoul(argv[j + 3], NULL, 10);
   cout << "\nNumber of tests: " << Number_Of_Tests << endl;
   cout << "Pattern sizes: ";
   for (j = 0; j < Number_Of_Pattern_Sizes; ++j) 
