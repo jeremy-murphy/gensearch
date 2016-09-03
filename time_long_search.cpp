@@ -38,13 +38,8 @@ const char* algorithm_names[] = {
   const char textFileName[] = "long.txt";
   const char wordFileName[] = "words.txt";
 
-#define DNA_TEST
-#ifndef DNA_TEST
-  algorithm_enumeration alg[] = {Dummy, TBM};
-#else
   algorithm_enumeration alg[] = {Dummy, SF, L, HAL, ABM, GBM, 
                                  HAL2, HAL3, HAL4, HAL5};
-#endif
 
 const int number_of_algorithms = sizeof(alg)/sizeof(alg[0]); 
 
