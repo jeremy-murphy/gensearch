@@ -1,7 +1,10 @@
 
 #ifndef SEARCH_HASH_TRAITS
 #  define SEARCH_HASH_TRAITS
-     
+
+// TODO: The return type of the hash function should be the unsigned equivalent
+// of the iterator's value type.
+
      template <class T>
      struct search_trait {
        enum {hash_range_max = 0};

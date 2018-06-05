@@ -1,3 +1,6 @@
+#ifndef DNA_SEARCH_H
+#define DNA_SEARCH_H
+
   
   struct search_trait_dna2 {
     enum {hash_range_max = 64};
@@ -78,3 +81,5 @@ inline RandomAccessIterator1 hal5(RandomAccessIterator1 text,
   return search_hashed(text, textEnd, pattern, patternEnd,
                        (search_trait_dna5*)0);
 }
+
+#endif

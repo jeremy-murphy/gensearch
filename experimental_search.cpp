@@ -85,7 +85,7 @@ void Run(int k, const Container& S1,
     
 
   }
-  for (K = 0; K < dictionary.size(); ++K) {
+  for (K = 0; K < long(dictionary.size()); ++K) {
     S2 = dictionary[K];
     
     Algorithm(k, S1, S2, P);

@@ -124,7 +124,7 @@ ForwardIterator1 __search_L(ForwardIterator1 text,
             }
             if (j == 0)
                 break;
-            p = (pattern + j);
+            p = pattern + j;
             while (*text == *p)
             {
                 ++text;
@@ -193,12 +193,13 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
     using namespace std;
     typedef typename iterator_traits<RandomAccessIterator1>::difference_type Distance1;
     typedef typename iterator_traits<RandomAccessIterator2>::difference_type Distance2;
+    
     if (pattern == patternEnd) return text;
     Distance2 const pattern_size = patternEnd - pattern;
     Distance2 j, m;
     if (Trait::suffix_size == 0 || pattern_size < Trait::suffix_size)
         return __search_L(text, textEnd, pattern, patternEnd);
-    Distance1 k, large, adjustment, mismatch_shift, text_size;
+    Distance1 k, mismatch_shift, text_size;
     vector<Distance1> next;
     boost::array<Distance1, Trait::hash_range_max> skip;
 
@@ -215,9 +216,8 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
     mismatch_shift = skip[Trait::hash(pattern + m - 1)];
     skip[Trait::hash(pattern + m - 1)] = 0;
 
-    large = text_size + 1;
-    adjustment = large + pattern_size - 1;
-    skip[Trait::hash(pattern + pattern_size - 1)] = large;
+    Distance1 const adjustment = text_size + pattern_size;
+    skip[Trait::hash(pattern + pattern_size - 1)] = text_size + 1;
     k -= text_size;
     for (;;)
     {
@@ -225,7 +225,9 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
         if (k >= 0) break;
         do   // this loop is hot for data read
         {
-            unsigned int const index = Trait::hash(textEnd + k);
+            // TODO: The type of this index should be the unsigned equivalent of
+            // whatever the char type is.
+            unsigned char const index = Trait::hash(textEnd + k);
             Distance1 const increment = skip[index];
             k += increment;
         }
@@ -233,8 +235,6 @@ RandomAccessIterator1 search_hashed(RandomAccessIterator1 text,
         if (k < pattern_size)
             return textEnd;
         k -= adjustment;
-
-
 
         if (textEnd[k] != pattern[0])
             k += mismatch_shift;

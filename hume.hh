@@ -53,7 +53,7 @@ struct pattern
 
 static pattern pat;
 
-typedef typename array_type::const_iterator pat_iterator;
+typedef array_type::const_iterator pat_iterator;
 
 template <typename RandomAccessIterator>
 void bmprep(RandomAccessIterator base, int m)
